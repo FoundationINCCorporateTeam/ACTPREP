@@ -1,0 +1,414 @@
+<?php $pageTitle = 'AI Tutor - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Chat Interface -->
+            <div class="flex flex-col h-[calc(100vh-8rem)]">
+                <!-- Chat Header -->
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h1 class="page-title">AI Tutor</h1>
+                        <p class="page-subtitle">Ask me anything about ACT prep!</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <select id="model-select" class="form-input form-select w-48">
+                            <option value="deepseek-v3.2">DeepSeek V3.2</option>
+                            <option value="glm-4.7">GLM 4.7 Thinking</option>
+                            <option value="llama-3.1">Llama 3.1 Large</option>
+                            <option value="kimi-k2">Kimi K2 Thinking</option>
+                        </select>
+                        <button id="new-chat-btn" class="btn btn-secondary">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            New Chat
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex gap-6 min-h-0">
+                    <!-- Conversations Sidebar -->
+                    <div class="hidden lg:block w-64 flex-shrink-0">
+                        <div class="card h-full flex flex-col">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Conversations</h3>
+                            </div>
+                            <div class="card-body p-0 flex-1 overflow-y-auto" id="conversations-list">
+                                <!-- Conversations will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Area -->
+                    <div class="flex-1 flex flex-col min-h-0">
+                        <div class="card flex-1 flex flex-col min-h-0">
+                            <!-- Messages Container -->
+                            <div class="flex-1 overflow-y-auto p-6" id="messages-container">
+                                <!-- Welcome Message -->
+                                <div id="welcome-message" class="text-center py-12">
+                                    <div class="text-6xl mb-4">🤖</div>
+                                    <h2 class="text-2xl font-bold mb-2">Welcome to ACT AI Tutor!</h2>
+                                    <p class="text-gray-500 mb-6 max-w-lg mx-auto">
+                                        I'm here to help you prepare for the ACT. Ask me about any topic, get explanations, practice problems, or study tips!
+                                    </p>
+                                    <div class="flex flex-wrap justify-center gap-2">
+                                        <button class="quick-prompt btn btn-outline btn-sm">Explain quadratic equations</button>
+                                        <button class="quick-prompt btn btn-outline btn-sm">Tips for reading comprehension</button>
+                                        <button class="quick-prompt btn btn-outline btn-sm">Grammar rules for ACT</button>
+                                        <button class="quick-prompt btn btn-outline btn-sm">Science data interpretation</button>
+                                    </div>
+                                </div>
+
+                                <!-- Messages will be rendered here -->
+                                <div id="messages-list" class="space-y-6">
+                                </div>
+
+                                <!-- Typing Indicator -->
+                                <div id="typing-indicator" class="hidden flex items-start gap-3 mt-6">
+                                    <div class="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white text-sm">🤖</div>
+                                    <div class="flex-1">
+                                        <div class="inline-flex items-center gap-1 px-4 py-3 rounded-2xl bg-gray-100 dark:bg-gray-700">
+                                            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                                            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                                            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Input Area -->
+                            <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                                <form id="chat-form" class="flex gap-3">
+                                    <div class="flex-1 relative">
+                                        <textarea id="message-input" class="form-input resize-none pr-12" rows="1" placeholder="Type your message..." required></textarea>
+                                        <div class="absolute right-2 bottom-2 flex gap-1">
+                                            <button type="button" id="attach-context" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-400 hover:text-gray-600" title="Add context">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="send-btn">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                        </svg>
+                                    </button>
+                                </form>
+                                <p class="text-xs text-gray-400 mt-2 text-center">
+                                    Press Enter to send, Shift+Enter for new line
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Context Panel -->
+                    <div class="hidden xl:block w-72 flex-shrink-0">
+                        <div class="card h-full">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Quick Actions</h3>
+                            </div>
+                            <div class="card-body space-y-4">
+                                <div>
+                                    <h4 class="text-sm font-medium mb-2">Study Topics</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button class="topic-btn chip cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30" data-topic="Algebra">Algebra</button>
+                                        <button class="topic-btn chip cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30" data-topic="Grammar">Grammar</button>
+                                        <button class="topic-btn chip cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30" data-topic="Reading">Reading</button>
+                                        <button class="topic-btn chip cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30" data-topic="Science">Science</button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 class="text-sm font-medium mb-2">Ask for...</h4>
+                                    <div class="space-y-2">
+                                        <button class="action-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-action="practice">
+                                            📝 Practice Problem
+                                        </button>
+                                        <button class="action-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-action="explain">
+                                            📖 Explain Concept
+                                        </button>
+                                        <button class="action-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-action="tips">
+                                            💡 Study Tips
+                                        </button>
+                                        <button class="action-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-action="review">
+                                            🔍 Review My Work
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                                    <h4 class="text-sm font-medium mb-2">Current Context</h4>
+                                    <div id="context-display" class="text-sm text-gray-500">
+                                        No specific context set
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let currentConversationId = null;
+let messages = [];
+let isGenerating = false;
+let currentContext = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check for context from URL
+    const params = Utils.getQueryParams();
+    if (params.context) {
+        currentContext = params.context;
+        document.getElementById('context-display').textContent = `Topic: ${currentContext}`;
+    }
+    
+    setupEventListeners();
+    loadConversations();
+    autoResizeTextarea();
+});
+
+function setupEventListeners() {
+    // Chat form
+    document.getElementById('chat-form').addEventListener('submit', handleSendMessage);
+    
+    // New chat
+    document.getElementById('new-chat-btn').addEventListener('click', startNewChat);
+    
+    // Quick prompts
+    document.querySelectorAll('.quick-prompt').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('message-input').value = btn.textContent;
+            document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+        });
+    });
+    
+    // Topic buttons
+    document.querySelectorAll('.topic-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const topic = btn.dataset.topic;
+            document.getElementById('message-input').value = `Help me understand ${topic} for the ACT`;
+            document.getElementById('message-input').focus();
+        });
+    });
+    
+    // Action buttons
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const action = btn.dataset.action;
+            const prompts = {
+                practice: 'Give me a practice problem to solve',
+                explain: 'Explain this concept to me: ',
+                tips: 'What are the best study tips for ',
+                review: 'Can you review and explain: '
+            };
+            document.getElementById('message-input').value = prompts[action] || '';
+            document.getElementById('message-input').focus();
+        });
+    });
+    
+    // Enter to send
+    document.getElementById('message-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+        }
+    });
+}
+
+function autoResizeTextarea() {
+    const textarea = document.getElementById('message-input');
+    textarea.addEventListener('input', () => {
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.min(textarea.scrollHeight, 150) + 'px';
+    });
+}
+
+async function loadConversations() {
+    try {
+        const result = await API.getConversations();
+        const container = document.getElementById('conversations-list');
+        
+        if (result.success && result.data && result.data.length > 0) {
+            container.innerHTML = result.data.map(conv => `
+                <button class="conversation-item w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700 transition-colors ${conv.id === currentConversationId ? 'bg-primary-50 dark:bg-primary-900/20' : ''}" data-id="${conv.id}">
+                    <div class="font-medium text-sm truncate">${Utils.escapeHtml(conv.title || 'New Conversation')}</div>
+                    <div class="text-xs text-gray-500">${conv.updated_at ? Utils.timeAgo(conv.updated_at) : ''}</div>
+                </button>
+            `).join('');
+            
+            // Add click handlers
+            container.querySelectorAll('.conversation-item').forEach(item => {
+                item.addEventListener('click', () => loadConversation(item.dataset.id));
+            });
+        } else {
+            container.innerHTML = '<p class="p-4 text-sm text-gray-500 text-center">No conversations yet</p>';
+        }
+    } catch (error) {
+        console.error('Failed to load conversations:', error);
+    }
+}
+
+async function loadConversation(id) {
+    currentConversationId = id;
+    
+    try {
+        const result = await API.getChatHistory(id);
+        
+        if (result.success && result.data) {
+            messages = result.data.messages || [];
+            renderMessages();
+        }
+        
+        // Update active state
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.classList.toggle('bg-primary-50', item.dataset.id === id);
+            item.classList.toggle('dark:bg-primary-900/20', item.dataset.id === id);
+        });
+        
+    } catch (error) {
+        console.error('Failed to load conversation:', error);
+    }
+}
+
+function startNewChat() {
+    currentConversationId = null;
+    messages = [];
+    renderMessages();
+    document.getElementById('message-input').focus();
+}
+
+async function handleSendMessage(e) {
+    e.preventDefault();
+    
+    if (isGenerating) return;
+    
+    const input = document.getElementById('message-input');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Clear input
+    input.value = '';
+    input.style.height = 'auto';
+    
+    // Add user message
+    messages.push({
+        role: 'user',
+        content: message,
+        timestamp: Math.floor(Date.now() / 1000)
+    });
+    
+    renderMessages();
+    scrollToBottom();
+    
+    // Show typing indicator
+    isGenerating = true;
+    document.getElementById('typing-indicator').classList.remove('hidden');
+    document.getElementById('send-btn').disabled = true;
+    
+    try {
+        const model = document.getElementById('model-select').value;
+        const context = currentContext ? { topic: currentContext } : {};
+        
+        // Create conversation if needed
+        if (!currentConversationId) {
+            const createResult = await API.createConversation(message.substring(0, 50));
+            if (createResult.success && createResult.data) {
+                currentConversationId = createResult.data.id;
+                loadConversations();
+            }
+        }
+        
+        // Send message with polling
+        const result = await Poll.chat({
+            conversation_id: currentConversationId,
+            message,
+            context,
+            model
+        });
+        
+        // Add AI response
+        messages.push({
+            role: 'assistant',
+            content: result.response || result.content || result,
+            timestamp: Math.floor(Date.now() / 1000)
+        });
+        
+        renderMessages();
+        scrollToBottom();
+        
+    } catch (error) {
+        Notifications.error('Error', error.message);
+        // Remove user message on error
+        messages.pop();
+        renderMessages();
+    } finally {
+        isGenerating = false;
+        document.getElementById('typing-indicator').classList.add('hidden');
+        document.getElementById('send-btn').disabled = false;
+    }
+}
+
+function renderMessages() {
+    const container = document.getElementById('messages-list');
+    const welcome = document.getElementById('welcome-message');
+    
+    if (messages.length === 0) {
+        container.innerHTML = '';
+        welcome.classList.remove('hidden');
+        return;
+    }
+    
+    welcome.classList.add('hidden');
+    
+    container.innerHTML = messages.map(msg => {
+        const isUser = msg.role === 'user';
+        
+        return `
+            <div class="flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}">
+                <div class="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${isUser ? 'bg-primary-500 text-white' : 'bg-gray-200 dark:bg-gray-700'}">
+                    ${isUser ? '👤' : '🤖'}
+                </div>
+                <div class="flex-1 ${isUser ? 'text-right' : ''}">
+                    <div class="inline-block max-w-[85%] ${isUser ? 'text-left' : ''}">
+                        <div class="px-4 py-3 rounded-2xl ${isUser ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-700'}">
+                            <div class="message-content prose dark:prose-invert prose-sm max-w-none ${isUser ? 'text-white' : ''}">${isUser ? Utils.escapeHtml(msg.content) : MarkdownRenderer.render(msg.content)}</div>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-1 ${isUser ? 'text-right' : ''}">
+                            ${msg.timestamp ? Utils.timeAgo(msg.timestamp) : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Render math in messages
+    container.querySelectorAll('.message-content').forEach(el => {
+        MathRenderer.renderElement(el);
+    });
+}
+
+function scrollToBottom() {
+    const container = document.getElementById('messages-container');
+    container.scrollTop = container.scrollHeight;
+}
+</script>
+
+<style>
+.message-content p:last-child {
+    margin-bottom: 0;
+}
+.message-content pre {
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+.message-content code {
+    font-size: 0.85em;
+}
+</style>

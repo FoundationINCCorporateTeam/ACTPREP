@@ -1,0 +1,560 @@
+<?php $pageTitle = 'Study Plan - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Study Plan</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div>
+                    <h1 class="page-title">Study Plan Generator</h1>
+                    <p class="page-subtitle">Create a personalized study plan based on your goals</p>
+                </div>
+                <button id="new-plan-btn" class="btn btn-primary mt-4 md:mt-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    New Study Plan
+                </button>
+            </div>
+
+            <!-- Plan Generator Form -->
+            <div id="plan-generator" class="card mb-8 hidden">
+                <div class="card-header flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">Generate Study Plan</h2>
+                    <button class="btn btn-ghost btn-icon close-form">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="plan-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="form-label" for="target-score">Target ACT Score</label>
+                                <input type="number" id="target-score" name="target_score" class="form-input" min="1" max="36" value="28" required>
+                                <p class="form-hint">Your goal composite score (1-36)</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="test-date">Test Date</label>
+                                <input type="date" id="test-date" name="test_date" class="form-input" required>
+                                <p class="form-hint">When is your ACT test?</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Skill Level</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div>
+                                    <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">English</label>
+                                    <select name="level_english" class="form-input form-select">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate" selected>Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Math</label>
+                                    <select name="level_math" class="form-input form-select">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate" selected>Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Reading</label>
+                                    <select name="level_reading" class="form-input form-select">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate" selected>Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Science</label>
+                                    <select name="level_science" class="form-input form-select">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate" selected>Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="study-hours">Available Study Hours per Week</label>
+                            <select id="study-hours" name="study_hours" class="form-input form-select">
+                                <option value="5">5 hours</option>
+                                <option value="10" selected>10 hours</option>
+                                <option value="15">15 hours</option>
+                                <option value="20">20 hours</option>
+                                <option value="25">25+ hours</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Focus Areas</label>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="english" checked class="form-checkbox">
+                                    <span class="text-sm">English</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="math" checked class="form-checkbox">
+                                    <span class="text-sm">Math</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="reading" checked class="form-checkbox">
+                                    <span class="text-sm">Reading</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="science" checked class="form-checkbox">
+                                    <span class="text-sm">Science</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-full md:w-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            Generate Study Plan
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Generation Progress -->
+            <div id="generating" class="card mb-8 hidden">
+                <div class="card-body text-center py-12">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <h3 class="text-lg font-semibold mb-2">Creating Your Study Plan...</h3>
+                    <p class="text-gray-500 mb-4" id="generation-status">Analyzing your goals...</p>
+                    <div class="max-w-md mx-auto">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="generation-progress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Existing Plans -->
+            <div id="plans-list">
+                <div id="no-plans" class="text-center py-12 hidden">
+                    <div class="text-6xl mb-4">📅</div>
+                    <h3 class="text-xl font-semibold mb-2">No Study Plans Yet</h3>
+                    <p class="text-gray-500 mb-6">Generate your first personalized study plan!</p>
+                    <button class="btn btn-primary" id="empty-new-plan">Create Study Plan</button>
+                </div>
+
+                <div id="plans-container" class="space-y-6">
+                    <!-- Plans will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Active Plan View -->
+            <div id="active-plan" class="hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <button id="back-to-plans" class="btn btn-ghost">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        All Plans
+                    </button>
+                    <div class="flex gap-2">
+                        <button id="edit-plan" class="btn btn-secondary btn-sm">Edit</button>
+                        <button id="delete-plan" class="btn btn-danger btn-sm">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Plan Header -->
+                <div class="card mb-6 bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                    <div class="card-body">
+                        <div class="grid md:grid-cols-4 gap-6">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold" id="plan-target">28</div>
+                                <div class="text-sm opacity-80">Target Score</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold" id="plan-weeks">8</div>
+                                <div class="text-sm opacity-80">Weeks</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold" id="plan-hours">10</div>
+                                <div class="text-sm opacity-80">Hours/Week</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold" id="plan-progress">0%</div>
+                                <div class="text-sm opacity-80">Complete</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan Progress -->
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium">Overall Progress</span>
+                            <span class="text-sm text-gray-500" id="progress-text">0 of 0 tasks complete</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Schedule -->
+                <div id="weekly-schedule" class="space-y-4">
+                    <!-- Weeks will be rendered here -->
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let plans = [];
+let activePlan = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Set default test date to 2 months from now
+    const defaultDate = new Date();
+    defaultDate.setMonth(defaultDate.getMonth() + 2);
+    document.getElementById('test-date').value = defaultDate.toISOString().split('T')[0];
+    
+    setupEventListeners();
+    await loadPlans();
+});
+
+function setupEventListeners() {
+    // New plan buttons
+    document.getElementById('new-plan-btn').addEventListener('click', showPlanForm);
+    document.getElementById('empty-new-plan')?.addEventListener('click', showPlanForm);
+    
+    // Close form
+    document.querySelectorAll('.close-form').forEach(btn => {
+        btn.addEventListener('click', hidePlanForm);
+    });
+    
+    // Form submission
+    document.getElementById('plan-form').addEventListener('submit', handleGeneratePlan);
+    
+    // Back button
+    document.getElementById('back-to-plans').addEventListener('click', showPlansList);
+    
+    // Delete plan
+    document.getElementById('delete-plan').addEventListener('click', handleDeletePlan);
+}
+
+function showPlanForm() {
+    document.getElementById('plan-generator').classList.remove('hidden');
+}
+
+function hidePlanForm() {
+    document.getElementById('plan-generator').classList.add('hidden');
+}
+
+async function loadPlans() {
+    try {
+        const result = await API.getStudyPlans();
+        
+        if (result.success && result.data) {
+            plans = result.data;
+            renderPlans();
+        }
+    } catch (error) {
+        console.error('Failed to load plans:', error);
+    }
+}
+
+function renderPlans() {
+    const container = document.getElementById('plans-container');
+    const noPlans = document.getElementById('no-plans');
+    
+    if (plans.length === 0) {
+        container.classList.add('hidden');
+        noPlans.classList.remove('hidden');
+        return;
+    }
+    
+    noPlans.classList.add('hidden');
+    container.classList.remove('hidden');
+    
+    container.innerHTML = plans.map(plan => {
+        const progress = calculatePlanProgress(plan);
+        const testDate = plan.test_date ? new Date(plan.test_date * 1000) : null;
+        const daysUntil = testDate ? Math.ceil((testDate - new Date()) / (1000 * 60 * 60 * 24)) : null;
+        
+        return `
+            <div class="card hover:shadow-lg transition-shadow cursor-pointer plan-card" data-id="${plan.id}">
+                <div class="card-body">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="font-bold text-lg">${Utils.escapeHtml(plan.title || 'Study Plan')}</h3>
+                            <p class="text-sm text-gray-500">Target: ${plan.target_score}/36</p>
+                        </div>
+                        ${daysUntil !== null ? `
+                            <span class="badge ${daysUntil <= 7 ? 'badge-danger' : daysUntil <= 30 ? 'badge-warning' : 'badge-primary'}">
+                                ${daysUntil > 0 ? `${daysUntil} days left` : 'Test day!'}
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>Progress</span>
+                            <span>${progress}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${progress >= 80 ? 'bg-green-500' : ''}" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>${plan.weeks?.length || 0} weeks • ${plan.study_hours || 10} hrs/week</span>
+                        <span>Created ${plan.created_at ? Utils.timeAgo(plan.created_at) : 'recently'}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Add click handlers
+    container.querySelectorAll('.plan-card').forEach(card => {
+        card.addEventListener('click', () => viewPlan(card.dataset.id));
+    });
+}
+
+function calculatePlanProgress(plan) {
+    if (!plan.weeks) return 0;
+    
+    let totalTasks = 0;
+    let completedTasks = 0;
+    
+    plan.weeks.forEach(week => {
+        week.days?.forEach(day => {
+            day.tasks?.forEach(task => {
+                totalTasks++;
+                if (task.completed) completedTasks++;
+            });
+        });
+    });
+    
+    return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+}
+
+async function handleGeneratePlan(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const focus = Array.from(formData.getAll('focus[]'));
+    
+    if (focus.length === 0) {
+        Notifications.error('Error', 'Please select at least one focus area');
+        return;
+    }
+    
+    const params = {
+        target_score: parseInt(formData.get('target_score')),
+        test_date: formData.get('test_date'),
+        study_hours: parseInt(formData.get('study_hours')),
+        focus_areas: focus,
+        levels: {
+            english: formData.get('level_english'),
+            math: formData.get('level_math'),
+            reading: formData.get('level_reading'),
+            science: formData.get('level_science')
+        }
+    };
+    
+    // Show progress
+    hidePlanForm();
+    document.getElementById('generating').classList.remove('hidden');
+    
+    try {
+        const result = await Poll.generateStudyPlan(params, {
+            onProgress: (progress) => {
+                document.getElementById('generation-progress').style.width = progress.progress + '%';
+                
+                const messages = ['Analyzing your goals...', 'Creating weekly schedule...', 'Adding practice activities...', 'Finalizing plan...'];
+                const msgIndex = Math.min(Math.floor(progress.progress / 25), 3);
+                document.getElementById('generation-status').textContent = messages[msgIndex];
+            }
+        });
+        
+        // Save plan
+        const planData = {
+            ...params,
+            title: `${params.target_score}+ Score Plan`,
+            weeks: result.weeks || result,
+            created_at: Math.floor(Date.now() / 1000)
+        };
+        
+        const saveResult = await API.updateStudyPlan(null, planData);
+        
+        if (saveResult.success) {
+            Notifications.success('Plan Created!', 'Your study plan is ready');
+            await loadPlans();
+            
+            if (saveResult.data?.id) {
+                viewPlan(saveResult.data.id);
+            }
+        }
+        
+    } catch (error) {
+        Notifications.error('Generation Failed', error.message);
+    } finally {
+        document.getElementById('generating').classList.add('hidden');
+    }
+}
+
+function viewPlan(id) {
+    activePlan = plans.find(p => p.id === id);
+    
+    if (!activePlan) return;
+    
+    // Hide plans list, show active plan
+    document.getElementById('plans-list').classList.add('hidden');
+    document.getElementById('active-plan').classList.remove('hidden');
+    
+    // Update header stats
+    document.getElementById('plan-target').textContent = activePlan.target_score || '--';
+    document.getElementById('plan-weeks').textContent = activePlan.weeks?.length || '--';
+    document.getElementById('plan-hours').textContent = activePlan.study_hours || '--';
+    
+    const progress = calculatePlanProgress(activePlan);
+    document.getElementById('plan-progress').textContent = progress + '%';
+    document.getElementById('progress-bar').style.width = progress + '%';
+    
+    // Count tasks
+    let totalTasks = 0;
+    let completedTasks = 0;
+    activePlan.weeks?.forEach(week => {
+        week.days?.forEach(day => {
+            day.tasks?.forEach(task => {
+                totalTasks++;
+                if (task.completed) completedTasks++;
+            });
+        });
+    });
+    document.getElementById('progress-text').textContent = `${completedTasks} of ${totalTasks} tasks complete`;
+    
+    // Render weekly schedule
+    renderWeeklySchedule();
+}
+
+function renderWeeklySchedule() {
+    const container = document.getElementById('weekly-schedule');
+    
+    if (!activePlan.weeks || activePlan.weeks.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-8">No schedule available</p>';
+        return;
+    }
+    
+    container.innerHTML = activePlan.weeks.map((week, weekIndex) => `
+        <div class="card">
+            <div class="card-header">
+                <h3 class="font-semibold">Week ${weekIndex + 1}: ${Utils.escapeHtml(week.focus || 'General Study')}</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                    ${(week.days || []).map((day, dayIndex) => `
+                        <div class="p-4">
+                            <div class="font-medium mb-2">${day.name || `Day ${dayIndex + 1}`}</div>
+                            <div class="space-y-2">
+                                ${(day.tasks || []).map((task, taskIndex) => `
+                                    <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors">
+                                        <input type="checkbox" class="form-checkbox mt-1 task-checkbox" 
+                                            data-week="${weekIndex}" data-day="${dayIndex}" data-task="${taskIndex}"
+                                            ${task.completed ? 'checked' : ''}>
+                                        <div class="flex-1">
+                                            <div class="${task.completed ? 'line-through text-gray-400' : ''}">${Utils.escapeHtml(task.title || task.description || 'Task')}</div>
+                                            ${task.duration ? `<div class="text-xs text-gray-500">${task.duration} min</div>` : ''}
+                                        </div>
+                                        ${task.type ? `<span class="badge badge-${getTaskTypeBadge(task.type)}">${task.type}</span>` : ''}
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Add checkbox handlers
+    container.querySelectorAll('.task-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', handleTaskToggle);
+    });
+}
+
+function getTaskTypeBadge(type) {
+    const badges = {
+        lesson: 'primary',
+        quiz: 'success',
+        practice: 'warning',
+        review: 'purple',
+        test: 'danger'
+    };
+    return badges[type] || 'gray';
+}
+
+async function handleTaskToggle(e) {
+    const { week, day, task } = e.target.dataset;
+    const completed = e.target.checked;
+    
+    try {
+        await API.completeTask(activePlan.id, parseInt(week), parseInt(day), parseInt(task));
+        
+        // Update local state
+        activePlan.weeks[week].days[day].tasks[task].completed = completed;
+        
+        // Update progress display
+        const progress = calculatePlanProgress(activePlan);
+        document.getElementById('plan-progress').textContent = progress + '%';
+        document.getElementById('progress-bar').style.width = progress + '%';
+        
+        let totalTasks = 0;
+        let completedTasks = 0;
+        activePlan.weeks.forEach(w => {
+            w.days?.forEach(d => {
+                d.tasks?.forEach(t => {
+                    totalTasks++;
+                    if (t.completed) completedTasks++;
+                });
+            });
+        });
+        document.getElementById('progress-text').textContent = `${completedTasks} of ${totalTasks} tasks complete`;
+        
+    } catch (error) {
+        Notifications.error('Error', 'Failed to update task');
+        e.target.checked = !completed; // Revert
+    }
+}
+
+function showPlansList() {
+    document.getElementById('active-plan').classList.add('hidden');
+    document.getElementById('plans-list').classList.remove('hidden');
+    activePlan = null;
+}
+
+async function handleDeletePlan() {
+    if (!activePlan) return;
+    
+    if (!confirm('Are you sure you want to delete this study plan?')) return;
+    
+    try {
+        // API call to delete would go here
+        plans = plans.filter(p => p.id !== activePlan.id);
+        showPlansList();
+        renderPlans();
+        Notifications.success('Deleted', 'Study plan has been removed');
+    } catch (error) {
+        Notifications.error('Error', 'Failed to delete plan');
+    }
+}
+</script>

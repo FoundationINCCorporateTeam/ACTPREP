@@ -1,0 +1,528 @@
+/**
+ * ACT Test Prep - Dark Mode Styles
+ */
+
+/* Dark mode class toggle */
+.dark {
+    color-scheme: dark;
+}
+
+/* ==================== Base Dark Mode Colors ==================== */
+
+.dark body {
+    background-color: #111827;
+    color: #f9fafb;
+}
+
+/* ==================== Text Colors ==================== */
+
+.dark .text-gray-900 { color: #f9fafb; }
+.dark .text-gray-800 { color: #f3f4f6; }
+.dark .text-gray-700 { color: #e5e7eb; }
+.dark .text-gray-600 { color: #d1d5db; }
+.dark .text-gray-500 { color: #9ca3af; }
+
+/* ==================== Background Colors ==================== */
+
+.dark .bg-white { background-color: #1f2937; }
+.dark .bg-gray-50 { background-color: #111827; }
+.dark .bg-gray-100 { background-color: #1f2937; }
+.dark .bg-gray-200 { background-color: #374151; }
+
+/* ==================== Border Colors ==================== */
+
+.dark .border-gray-200 { border-color: #374151; }
+.dark .border-gray-300 { border-color: #4b5563; }
+
+/* ==================== Header Dark Mode ==================== */
+
+.dark #main-header {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.dark .nav-link {
+    color: #9ca3af;
+}
+
+.dark .nav-link:hover,
+.dark .nav-link.active {
+    color: #60a5fa;
+    background-color: rgba(96, 165, 250, 0.1);
+}
+
+/* ==================== Sidebar Dark Mode ==================== */
+
+.dark #sidebar {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.dark .sidebar-section-title {
+    color: #6b7280;
+}
+
+.dark .sidebar-link {
+    color: #9ca3af;
+}
+
+.dark .sidebar-link:hover,
+.dark .sidebar-link.active {
+    color: #60a5fa;
+    background-color: rgba(96, 165, 250, 0.1);
+}
+
+/* ==================== Cards Dark Mode ==================== */
+
+.dark .card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.dark .card-header {
+    border-color: #374151;
+}
+
+.dark .card-footer {
+    background-color: #111827;
+    border-color: #374151;
+}
+
+.dark .stat-card {
+    background-color: #1f2937;
+}
+
+/* ==================== Forms Dark Mode ==================== */
+
+.dark .form-input,
+.dark .form-select,
+.dark .form-textarea {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+.dark .form-input:focus,
+.dark .form-select:focus,
+.dark .form-textarea:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+.dark .form-input::placeholder {
+    color: #6b7280;
+}
+
+.dark .form-label {
+    color: #d1d5db;
+}
+
+.dark .form-checkbox,
+.dark .form-radio {
+    border-color: #4b5563;
+}
+
+/* ==================== Buttons Dark Mode ==================== */
+
+.dark .btn-secondary {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+.dark .btn-secondary:hover:not(:disabled) {
+    background-color: #4b5563;
+}
+
+.dark .btn-ghost {
+    color: #9ca3af;
+}
+
+.dark .btn-ghost:hover:not(:disabled) {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+.dark .btn-outline {
+    border-color: #60a5fa;
+    color: #60a5fa;
+}
+
+/* ==================== Modals Dark Mode ==================== */
+
+.dark .modal {
+    background-color: #1f2937;
+}
+
+.dark .modal-header {
+    border-color: #374151;
+}
+
+.dark .modal-footer {
+    border-color: #374151;
+}
+
+.dark .modal-close:hover {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+/* ==================== Dropdowns Dark Mode ==================== */
+
+.dark .dropdown-menu {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.dark .dropdown-item {
+    color: #d1d5db;
+}
+
+.dark .dropdown-item:hover {
+    background-color: #374151;
+    color: #f9fafb;
+}
+
+/* ==================== Tables Dark Mode ==================== */
+
+.dark .table-container {
+    border-color: #374151;
+}
+
+.dark .table th {
+    background-color: #111827;
+    color: #9ca3af;
+}
+
+.dark .table td {
+    border-color: #374151;
+}
+
+.dark .table tbody tr:hover {
+    background-color: #111827;
+}
+
+/* ==================== Tabs Dark Mode ==================== */
+
+.dark .tabs {
+    border-color: #374151;
+}
+
+.dark .tab {
+    color: #9ca3af;
+}
+
+.dark .tab:hover,
+.dark .tab.active {
+    color: #60a5fa;
+}
+
+.dark .tab.active {
+    border-color: #60a5fa;
+}
+
+/* ==================== Accordion Dark Mode ==================== */
+
+.dark .accordion {
+    border-color: #374151;
+}
+
+.dark .accordion-item {
+    border-color: #374151;
+}
+
+.dark .accordion-header {
+    background-color: #1f2937;
+}
+
+.dark .accordion-header:hover {
+    background-color: #111827;
+}
+
+.dark .accordion-body {
+    background-color: #111827;
+}
+
+/* ==================== Progress Bar Dark Mode ==================== */
+
+.dark .progress-bar {
+    background-color: #374151;
+}
+
+/* ==================== Toast Dark Mode ==================== */
+
+.dark .toast {
+    background-color: #1f2937;
+}
+
+.dark .toast-message {
+    color: #9ca3af;
+}
+
+.dark .toast-close:hover {
+    color: #f3f4f6;
+}
+
+/* ==================== Badges Dark Mode ==================== */
+
+.dark .badge-primary {
+    background-color: rgba(96, 165, 250, 0.2);
+    color: #93c5fd;
+}
+
+.dark .badge-success {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+.dark .badge-warning {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+}
+
+.dark .badge-danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.dark .badge-gray {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+/* Subject Badges Dark Mode */
+.dark .badge-english {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+}
+
+.dark .badge-math {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+.dark .badge-reading {
+    background-color: rgba(139, 92, 246, 0.2);
+    color: #c4b5fd;
+}
+
+.dark .badge-science {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+}
+
+.dark .badge-writing {
+    background-color: rgba(236, 72, 153, 0.2);
+    color: #f9a8d4;
+}
+
+/* ==================== Chips Dark Mode ==================== */
+
+.dark .chip {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+/* ==================== Alerts Dark Mode ==================== */
+
+.dark .alert-info {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #93c5fd;
+}
+
+.dark .alert-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #6ee7b7;
+}
+
+.dark .alert-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #fcd34d;
+}
+
+.dark .alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+}
+
+/* ==================== Divider Dark Mode ==================== */
+
+.dark .divider {
+    background-color: #374151;
+}
+
+.dark .divider-text::before,
+.dark .divider-text::after {
+    background-color: #374151;
+}
+
+/* ==================== Toggle Dark Mode ==================== */
+
+.dark .toggle-slider {
+    background-color: #4b5563;
+}
+
+/* ==================== Pagination Dark Mode ==================== */
+
+.dark .pagination-item {
+    color: #9ca3af;
+}
+
+.dark .pagination-item:hover:not(.active):not(.disabled) {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+/* ==================== Code Blocks Dark Mode ==================== */
+
+.dark .code-block {
+    background-color: #0d1117;
+    color: #c9d1d9;
+}
+
+.dark pre,
+.dark code {
+    background-color: #0d1117;
+    color: #c9d1d9;
+}
+
+/* ==================== Math Block Dark Mode ==================== */
+
+.dark .math-block {
+    background-color: #1f2937;
+}
+
+/* ==================== Chat Interface Dark Mode ==================== */
+
+.dark .chat-message-user {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.dark .chat-message-ai {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+.dark .chat-input {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+/* ==================== Quiz Interface Dark Mode ==================== */
+
+.dark .quiz-option {
+    background-color: #374151;
+    border-color: #4b5563;
+}
+
+.dark .quiz-option:hover {
+    background-color: #4b5563;
+    border-color: #60a5fa;
+}
+
+.dark .quiz-option.selected {
+    background-color: rgba(96, 165, 250, 0.2);
+    border-color: #60a5fa;
+}
+
+.dark .quiz-option.correct {
+    background-color: rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+}
+
+.dark .quiz-option.incorrect {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+}
+
+/* ==================== Flashcard Dark Mode ==================== */
+
+.dark .flashcard {
+    background-color: #1f2937;
+}
+
+.dark .flashcard-front,
+.dark .flashcard-back {
+    background-color: #1f2937;
+}
+
+/* ==================== Footer Dark Mode ==================== */
+
+.dark footer {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+/* ==================== Scrollbar Dark Mode ==================== */
+
+.dark ::-webkit-scrollbar-track {
+    background: #111827;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+/* ==================== Selection Dark Mode ==================== */
+
+.dark ::selection {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* ==================== Focus Styles Dark Mode ==================== */
+
+.dark :focus-visible {
+    outline-color: #60a5fa;
+}
+
+/* ==================== Loading Spinner Dark Mode ==================== */
+
+.dark .loading-spinner {
+    border-color: #374151;
+    border-top-color: #60a5fa;
+}
+
+.dark .spinner {
+    border-color: #374151;
+    border-top-color: #60a5fa;
+}
+
+/* ==================== Skeleton Dark Mode ==================== */
+
+.dark .skeleton,
+.dark .skeleton-loading {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200% 100%;
+}
+
+/* ==================== Subject Chips Dark Mode ==================== */
+
+.dark .subject-chip {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+/* ==================== Empty State Dark Mode ==================== */
+
+.dark .empty-state {
+    color: #9ca3af;
+}
+
+/* ==================== System Dark Mode Preference ==================== */
+
+@media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+        color-scheme: dark;
+    }
+    
+    :root:not(.light) body {
+        background-color: #111827;
+        color: #f9fafb;
+    }
+}

@@ -1,0 +1,434 @@
+<?php $pageTitle = 'Test Results - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <a href="practice-test.html">Practice Test</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Results</span>
+            </nav>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="py-12 text-center">
+                <div class="loading-spinner mx-auto mb-4"></div>
+                <p class="text-gray-500">Loading results...</p>
+            </div>
+
+            <!-- Results Content -->
+            <div id="results-content" class="hidden">
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold mb-2">ACT Practice Test Results</h1>
+                    <p class="text-gray-500" id="test-date">Completed on --</p>
+                </div>
+
+                <!-- Composite Score Card -->
+                <div class="max-w-3xl mx-auto mb-8">
+                    <div class="card bg-gradient-to-br from-primary-600 to-accent-600 text-white overflow-hidden">
+                        <div class="card-body py-10 relative">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                            <div class="relative text-center">
+                                <div class="text-sm uppercase tracking-wide opacity-80 mb-2">Composite Score</div>
+                                <div class="text-7xl font-bold mb-2" id="composite-score">--</div>
+                                <div class="text-lg opacity-80">
+                                    <span id="percentile">--</span>th percentile
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Scores -->
+                <div class="grid md:grid-cols-4 gap-4 mb-8">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-2xl mx-auto mb-3">📖</div>
+                            <div class="text-3xl font-bold text-blue-600" id="english-score">--</div>
+                            <div class="text-sm text-gray-500">English</div>
+                            <div class="text-xs text-gray-400 mt-1"><span id="english-correct">--</span>/<span id="english-total">75</span> correct</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-2xl mx-auto mb-3">🔢</div>
+                            <div class="text-3xl font-bold text-green-600" id="math-score">--</div>
+                            <div class="text-sm text-gray-500">Math</div>
+                            <div class="text-xs text-gray-400 mt-1"><span id="math-correct">--</span>/<span id="math-total">60</span> correct</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-2xl mx-auto mb-3">📚</div>
+                            <div class="text-3xl font-bold text-purple-600" id="reading-score">--</div>
+                            <div class="text-sm text-gray-500">Reading</div>
+                            <div class="text-xs text-gray-400 mt-1"><span id="reading-correct">--</span>/<span id="reading-total">40</span> correct</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-2xl mx-auto mb-3">🔬</div>
+                            <div class="text-3xl font-bold text-orange-600" id="science-score">--</div>
+                            <div class="text-sm text-gray-500">Science</div>
+                            <div class="text-xs text-gray-400 mt-1"><span id="science-correct">--</span>/<span id="science-total">40</span> correct</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <a href="practice-test.html" class="btn btn-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Take Another Test
+                    </a>
+                    <button id="print-results" class="btn btn-secondary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                        </svg>
+                        Print Results
+                    </button>
+                    <a href="study-plan.html" class="btn btn-outline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Create Study Plan
+                    </a>
+                </div>
+
+                <!-- Analysis -->
+                <div class="grid lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Score Breakdown -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Score Breakdown</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="h-64">
+                                <canvas id="breakdown-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Analysis -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Performance Analysis</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="performance-analysis" class="space-y-4">
+                                <!-- Analysis will be rendered here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strengths & Weaknesses -->
+                <div class="grid lg:grid-cols-2 gap-6 mb-8">
+                    <div class="card">
+                        <div class="card-header bg-green-50 dark:bg-green-900/20">
+                            <h2 class="font-semibold text-green-700 dark:text-green-400">💪 Strengths</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul id="strengths-list" class="space-y-2">
+                                <!-- Strengths will be rendered -->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-orange-50 dark:bg-orange-900/20">
+                            <h2 class="font-semibold text-orange-700 dark:text-orange-400">📈 Areas to Improve</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul id="weaknesses-list" class="space-y-2">
+                                <!-- Weaknesses will be rendered -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Review -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="flex items-center justify-between">
+                            <h2 class="font-semibold">Detailed Review</h2>
+                            <div class="tabs-inline">
+                                <button class="tab-btn active" data-section="english">English</button>
+                                <button class="tab-btn" data-section="math">Math</button>
+                                <button class="tab-btn" data-section="reading">Reading</button>
+                                <button class="tab-btn" data-section="science">Science</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="section-review" class="divide-y divide-gray-200 dark:divide-gray-700 max-h-96 overflow-y-auto">
+                            <!-- Section questions will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let test = null;
+let results = null;
+let currentReviewSection = 'english';
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const params = Utils.getQueryParams();
+    const testId = params.id;
+    
+    if (!testId) {
+        window.location.href = 'practice-test.html';
+        return;
+    }
+    
+    await loadResults(testId);
+    setupEventListeners();
+});
+
+async function loadResults(id) {
+    try {
+        const testResult = await API.getTest(id);
+        
+        if (!testResult.success || !testResult.data) {
+            throw new Error('Test not found');
+        }
+        
+        test = testResult.data;
+        results = test.results || {};
+        
+        renderResults();
+        
+        document.getElementById('loading-state').classList.add('hidden');
+        document.getElementById('results-content').classList.remove('hidden');
+        
+    } catch (error) {
+        console.error('Failed to load results:', error);
+        Notifications.error('Error', 'Failed to load test results');
+        setTimeout(() => window.location.href = 'practice-test.html', 2000);
+    }
+}
+
+function renderResults() {
+    // Date
+    document.getElementById('test-date').textContent = 
+        `Completed on ${test.created_at ? Utils.formatDate(test.created_at, 'long') : 'Unknown'}`;
+    
+    // Composite score
+    const composite = results.composite_score || calculateComposite();
+    document.getElementById('composite-score').textContent = composite;
+    document.getElementById('percentile').textContent = Utils.getPercentile(composite);
+    
+    // Section scores
+    const sections = ['english', 'math', 'reading', 'science'];
+    sections.forEach(section => {
+        const sectionResults = results.sections?.[section] || {};
+        const score = sectionResults.scaled_score || '--';
+        const correct = sectionResults.correct || '--';
+        const total = sectionResults.total || '--';
+        
+        document.getElementById(`${section}-score`).textContent = score;
+        document.getElementById(`${section}-correct`).textContent = correct;
+        document.getElementById(`${section}-total`).textContent = total;
+    });
+    
+    // Charts
+    renderCharts();
+    
+    // Analysis
+    renderAnalysis();
+    
+    // Strengths & Weaknesses
+    renderStrengthsWeaknesses();
+    
+    // Initial section review
+    renderSectionReview('english');
+}
+
+function calculateComposite() {
+    const sections = ['english', 'math', 'reading', 'science'];
+    const scores = sections.map(s => results.sections?.[s]?.scaled_score || 0).filter(s => s > 0);
+    return scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+}
+
+function renderCharts() {
+    const sections = ['english', 'math', 'reading', 'science'];
+    const scores = sections.map(s => results.sections?.[s]?.scaled_score || 0);
+    
+    Charts.radar('breakdown-chart',
+        ['English', 'Math', 'Reading', 'Science'],
+        [{ label: 'Your Score', data: scores, color: '#3b82f6' }],
+        { scales: { r: { min: 0, max: 36 } } }
+    );
+}
+
+function renderAnalysis() {
+    const container = document.getElementById('performance-analysis');
+    const sections = ['english', 'math', 'reading', 'science'];
+    
+    container.innerHTML = sections.map(section => {
+        const sectionResults = results.sections?.[section] || {};
+        const score = sectionResults.scaled_score || 0;
+        const percentage = Math.round((score / 36) * 100);
+        const color = score >= 30 ? 'green' : score >= 24 ? 'blue' : score >= 18 ? 'yellow' : 'red';
+        
+        return `
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium capitalize">${section}</span>
+                    <span class="text-${color}-600 font-bold">${score}/36</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill bg-${color}-500" style="width: ${percentage}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderStrengthsWeaknesses() {
+    const strengths = [];
+    const weaknesses = [];
+    
+    const sections = ['english', 'math', 'reading', 'science'];
+    sections.forEach(section => {
+        const sectionResults = results.sections?.[section] || {};
+        const score = sectionResults.scaled_score || 0;
+        const percentage = sectionResults.correct && sectionResults.total 
+            ? (sectionResults.correct / sectionResults.total) * 100 
+            : 0;
+        
+        if (score >= 28 || percentage >= 80) {
+            strengths.push({
+                section: Utils.capitalize(section),
+                detail: `Scored ${score}/36 (${Math.round(percentage)}% correct)`
+            });
+        }
+        
+        if (score < 24 || percentage < 60) {
+            weaknesses.push({
+                section: Utils.capitalize(section),
+                detail: `Scored ${score}/36 - focus on improving this area`
+            });
+        }
+    });
+    
+    // Render strengths
+    const strengthsList = document.getElementById('strengths-list');
+    if (strengths.length > 0) {
+        strengthsList.innerHTML = strengths.map(s => `
+            <li class="flex items-start gap-2">
+                <span class="text-green-500">✓</span>
+                <div>
+                    <span class="font-medium">${s.section}</span>
+                    <p class="text-sm text-gray-500">${s.detail}</p>
+                </div>
+            </li>
+        `).join('');
+    } else {
+        strengthsList.innerHTML = '<li class="text-gray-500">Complete more questions to identify strengths</li>';
+    }
+    
+    // Render weaknesses
+    const weaknessesList = document.getElementById('weaknesses-list');
+    if (weaknesses.length > 0) {
+        weaknessesList.innerHTML = weaknesses.map(w => `
+            <li class="flex items-start gap-2">
+                <span class="text-orange-500">→</span>
+                <div>
+                    <span class="font-medium">${w.section}</span>
+                    <p class="text-sm text-gray-500">${w.detail}</p>
+                </div>
+            </li>
+        `).join('');
+    } else {
+        weaknessesList.innerHTML = '<li class="text-gray-500">Great job! No major areas of concern.</li>';
+    }
+}
+
+function renderSectionReview(section) {
+    currentReviewSection = section;
+    const container = document.getElementById('section-review');
+    
+    const sectionData = test.sections?.[section];
+    const sectionResults = results.sections?.[section];
+    
+    if (!sectionData?.questions) {
+        container.innerHTML = '<p class="p-6 text-center text-gray-500">No questions to review</p>';
+        return;
+    }
+    
+    container.innerHTML = sectionData.questions.slice(0, 20).map((q, i) => {
+        const answerData = sectionResults?.answers?.[i] || {};
+        const isCorrect = answerData.correct;
+        
+        return `
+            <div class="p-4 ${isCorrect ? 'bg-green-50 dark:bg-green-900/10' : 'bg-red-50 dark:bg-red-900/10'}">
+                <div class="flex items-start gap-3">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isCorrect ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'} text-sm font-medium">
+                        ${isCorrect ? '✓' : '✗'}
+                    </span>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-medium mb-1">Question ${i + 1}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">${Utils.escapeHtml(q.question)}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function setupEventListeners() {
+    // Print
+    document.getElementById('print-results').addEventListener('click', () => {
+        window.print();
+    });
+    
+    // Tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSectionReview(btn.dataset.section);
+        });
+    });
+}
+</script>
+
+<style>
+.tabs-inline {
+    display: flex;
+    gap: 0.5rem;
+}
+.tab-btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    background: transparent;
+    color: #6b7280;
+    border: none;
+    cursor: pointer;
+    transition: all 150ms;
+}
+.tab-btn:hover {
+    background-color: #f3f4f6;
+}
+.tab-btn.active {
+    background-color: #3b82f6;
+    color: white;
+}
+@media print {
+    .btn, .tabs-inline, #sidebar, header, footer {
+        display: none !important;
+    }
+    .card {
+        break-inside: avoid;
+    }
+}
+</style>

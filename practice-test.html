@@ -1,0 +1,712 @@
+<?php $pageTitle = 'Practice Test - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Practice Test</span>
+            </nav>
+
+            <!-- Test Setup -->
+            <div id="test-setup">
+                <div class="mb-8">
+                    <h1 class="page-title">ACT Practice Test</h1>
+                    <p class="page-subtitle">Take a full-length practice test or focus on specific sections</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Test Options -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Full Test Card -->
+                        <div class="card hover:shadow-lg transition-shadow cursor-pointer" id="full-test-card">
+                            <div class="card-body">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-3xl text-white">
+                                        📝
+                                    </div>
+                                    <div class="flex-1">
+                                        <h2 class="text-xl font-bold mb-2">Full ACT Practice Test</h2>
+                                        <p class="text-gray-500 mb-4">Complete all 4 sections with official timing. Get a composite score estimate.</p>
+                                        <div class="flex flex-wrap gap-3 text-sm">
+                                            <span class="inline-flex items-center gap-1 text-gray-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                ~3 hours
+                                            </span>
+                                            <span class="inline-flex items-center gap-1 text-gray-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                                215 Questions
+                                            </span>
+                                            <span class="inline-flex items-center gap-1 text-gray-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                                                4 Sections
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary">Start Test</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section Tests -->
+                        <h3 class="font-semibold text-lg">Or practice individual sections:</h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <!-- English -->
+                            <div class="card hover:shadow-md transition-shadow cursor-pointer section-card" data-section="english">
+                                <div class="card-body">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-2xl">📖</div>
+                                        <div>
+                                            <h3 class="font-bold">English</h3>
+                                            <p class="text-sm text-gray-500">75 questions • 45 min</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Grammar, punctuation, sentence structure, and rhetorical skills</p>
+                                </div>
+                            </div>
+
+                            <!-- Math -->
+                            <div class="card hover:shadow-md transition-shadow cursor-pointer section-card" data-section="math">
+                                <div class="card-body">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-2xl">🔢</div>
+                                        <div>
+                                            <h3 class="font-bold">Math</h3>
+                                            <p class="text-sm text-gray-500">60 questions • 60 min</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Algebra, geometry, trigonometry, and pre-calculus concepts</p>
+                                </div>
+                            </div>
+
+                            <!-- Reading -->
+                            <div class="card hover:shadow-md transition-shadow cursor-pointer section-card" data-section="reading">
+                                <div class="card-body">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-2xl">📚</div>
+                                        <div>
+                                            <h3 class="font-bold">Reading</h3>
+                                            <p class="text-sm text-gray-500">40 questions • 35 min</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Comprehension, inference, main idea, and vocabulary in context</p>
+                                </div>
+                            </div>
+
+                            <!-- Science -->
+                            <div class="card hover:shadow-md transition-shadow cursor-pointer section-card" data-section="science">
+                                <div class="card-body">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-2xl">🔬</div>
+                                        <div>
+                                            <h3 class="font-bold">Science</h3>
+                                            <p class="text-sm text-gray-500">40 questions • 35 min</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Data interpretation, scientific investigation, and reasoning</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Previous Tests -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Recent Tests</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="recent-tests" class="divide-y divide-gray-200 dark:divide-gray-700 max-h-64 overflow-y-auto">
+                                    <p class="p-4 text-sm text-gray-500 text-center">No recent tests</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Test Tips -->
+                        <div class="card bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                            <div class="card-body">
+                                <h3 class="font-semibold mb-3">💡 Test Tips</h3>
+                                <ul class="space-y-2 text-sm opacity-90">
+                                    <li>• Answer every question - no penalty for guessing</li>
+                                    <li>• Pace yourself - don't spend too long on one question</li>
+                                    <li>• Read passages carefully before answering</li>
+                                    <li>• For math, show your work and check answers</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Score History -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Your Best Scores</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm">Composite</span>
+                                        <span class="font-bold text-lg" id="best-composite">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-blue-600">English</span>
+                                        <span class="font-medium" id="best-english">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-green-600">Math</span>
+                                        <span class="font-medium" id="best-math">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-purple-600">Reading</span>
+                                        <span class="font-medium" id="best-reading">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-orange-600">Science</span>
+                                        <span class="font-medium" id="best-science">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generation Progress -->
+            <div id="test-generating" class="hidden">
+                <div class="card max-w-xl mx-auto">
+                    <div class="card-body text-center py-12">
+                        <div class="loading-spinner mx-auto mb-4"></div>
+                        <h3 class="text-lg font-semibold mb-2">Generating Practice Test...</h3>
+                        <p class="text-gray-500 mb-4" id="generation-status">Preparing questions...</p>
+                        <div class="max-w-md mx-auto">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="generation-progress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-sm text-gray-400 mt-2"><span id="generation-percent">0</span>%</p>
+                        </div>
+                        <button id="cancel-generation" class="btn btn-ghost mt-4">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Taking Interface -->
+            <div id="test-taking" class="hidden">
+                <!-- Test Header -->
+                <div class="sticky top-16 bg-white dark:bg-gray-800 shadow-md z-20 -mx-6 px-6 py-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="font-bold text-lg" id="test-title">ACT Practice Test</h1>
+                            <p class="text-sm text-gray-500">Section: <span id="current-section-name" class="font-medium">English</span></p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-mono font-bold text-primary-600" id="section-timer">45:00</div>
+                                <div class="text-xs text-gray-500">Time Remaining</div>
+                            </div>
+                            <button id="pause-test" class="btn btn-secondary btn-sm">Pause</button>
+                            <button id="end-section" class="btn btn-primary btn-sm">End Section</button>
+                        </div>
+                    </div>
+                    <!-- Section Progress -->
+                    <div class="mt-3">
+                        <div class="flex items-center justify-between text-sm mb-1">
+                            <span>Question <span id="current-q-num">1</span> of <span id="total-section-q">75</span></span>
+                            <span id="section-progress-text">0% complete</span>
+                        </div>
+                        <div class="progress-bar h-2">
+                            <div class="progress-fill" id="section-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Area -->
+                <div class="grid lg:grid-cols-4 gap-6">
+                    <div class="lg:col-span-3">
+                        <!-- Passage (if applicable) -->
+                        <div id="passage-container" class="card mb-6 hidden">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Passage</h3>
+                            </div>
+                            <div class="card-body prose dark:prose-invert max-w-none max-h-96 overflow-y-auto" id="passage-content">
+                            </div>
+                        </div>
+
+                        <!-- Question -->
+                        <div class="card">
+                            <div class="card-body" id="question-container">
+                                <!-- Question content -->
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex justify-between mt-6">
+                            <button id="prev-q" class="btn btn-secondary">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                                Previous
+                            </button>
+                            <button id="next-q" class="btn btn-primary">
+                                Next
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question Navigator -->
+                    <div class="space-y-4">
+                        <div class="card sticky top-48">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Questions</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="question-navigator" class="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto">
+                                    <!-- Question buttons -->
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                                        <span class="w-4 h-4 rounded bg-gray-200 dark:bg-gray-700"></span> Unanswered
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                                        <span class="w-4 h-4 rounded bg-primary-500"></span> Answered
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                                        <span class="w-4 h-4 rounded bg-yellow-500"></span> Flagged
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="flag-question" class="btn btn-outline w-full">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path>
+                            </svg>
+                            Flag for Review
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Complete Modal -->
+            <div id="section-complete-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">✅</div>
+                        <h3 class="text-xl font-bold mb-2">Section Complete!</h3>
+                        <p class="text-gray-500 mb-6" id="section-complete-text">You've completed the English section.</p>
+                        <div class="flex gap-3 justify-center">
+                            <button id="review-section" class="btn btn-secondary">Review Answers</button>
+                            <button id="next-section" class="btn btn-primary">Next Section</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+const SECTIONS = {
+    english: { name: 'English', questions: 75, time: 45 * 60, icon: '📖' },
+    math: { name: 'Math', questions: 60, time: 60 * 60, icon: '🔢' },
+    reading: { name: 'Reading', questions: 40, time: 35 * 60, icon: '📚' },
+    science: { name: 'Science', questions: 40, time: 35 * 60, icon: '🔬' }
+};
+
+let test = null;
+let currentSection = null;
+let currentQuestionIndex = 0;
+let sectionAnswers = {};
+let flaggedQuestions = new Set();
+let timer = null;
+let timeRemaining = 0;
+let isPaused = false;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    setupEventListeners();
+    loadRecentTests();
+    loadBestScores();
+});
+
+function setupEventListeners() {
+    // Full test
+    document.getElementById('full-test-card').addEventListener('click', () => startTest('full'));
+    
+    // Section tests
+    document.querySelectorAll('.section-card').forEach(card => {
+        card.addEventListener('click', () => startTest(card.dataset.section));
+    });
+    
+    // Cancel generation
+    document.getElementById('cancel-generation').addEventListener('click', () => {
+        document.getElementById('test-generating').classList.add('hidden');
+        document.getElementById('test-setup').classList.remove('hidden');
+    });
+    
+    // Navigation
+    document.getElementById('prev-q').addEventListener('click', () => navigateQuestion(-1));
+    document.getElementById('next-q').addEventListener('click', () => navigateQuestion(1));
+    
+    // Pause/Resume
+    document.getElementById('pause-test').addEventListener('click', togglePause);
+    
+    // End section
+    document.getElementById('end-section').addEventListener('click', endSection);
+    
+    // Flag question
+    document.getElementById('flag-question').addEventListener('click', toggleFlag);
+    
+    // Section complete modal
+    document.getElementById('review-section').addEventListener('click', () => {
+        document.getElementById('section-complete-modal').classList.add('hidden');
+    });
+    
+    document.getElementById('next-section').addEventListener('click', () => {
+        document.getElementById('section-complete-modal').classList.add('hidden');
+        moveToNextSection();
+    });
+}
+
+async function loadRecentTests() {
+    try {
+        const result = await API.getTests();
+        const container = document.getElementById('recent-tests');
+        
+        if (result.success && result.data && result.data.length > 0) {
+            container.innerHTML = result.data.slice(0, 5).map(t => `
+                <a href="test-results.html?id=${t.id}" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-sm">${Utils.escapeHtml(t.title || 'Practice Test')}</div>
+                            <div class="text-xs text-gray-500">${Utils.formatDate(t.created_at)}</div>
+                        </div>
+                        ${t.composite_score ? `<span class="text-lg font-bold">${t.composite_score}</span>` : ''}
+                    </div>
+                </a>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Failed to load recent tests:', error);
+    }
+}
+
+async function loadBestScores() {
+    try {
+        const result = await API.getStatistics();
+        if (result.success && result.data?.tests) {
+            const tests = result.data.tests;
+            document.getElementById('best-composite').textContent = tests.best_composite || '--';
+            document.getElementById('best-english').textContent = tests.best_english || '--';
+            document.getElementById('best-math').textContent = tests.best_math || '--';
+            document.getElementById('best-reading').textContent = tests.best_reading || '--';
+            document.getElementById('best-science').textContent = tests.best_science || '--';
+        }
+    } catch (error) {
+        console.error('Failed to load best scores:', error);
+    }
+}
+
+async function startTest(type) {
+    document.getElementById('test-setup').classList.add('hidden');
+    document.getElementById('test-generating').classList.remove('hidden');
+    
+    const sections = type === 'full' ? ['english', 'math', 'reading', 'science'] : [type];
+    
+    try {
+        const result = await Poll.generatePracticeTest({ sections }, {
+            onProgress: (progress) => {
+                document.getElementById('generation-progress').style.width = progress.progress + '%';
+                document.getElementById('generation-percent').textContent = Math.round(progress.progress);
+                
+                const messages = ['Preparing questions...', 'Generating content...', 'Creating passages...', 'Finalizing test...'];
+                const msgIndex = Math.min(Math.floor(progress.progress / 25), 3);
+                document.getElementById('generation-status').textContent = messages[msgIndex];
+            }
+        });
+        
+        test = {
+            type,
+            sections: result.sections || result,
+            title: type === 'full' ? 'Full ACT Practice Test' : `${SECTIONS[type].name} Section`,
+            created_at: Math.floor(Date.now() / 1000)
+        };
+        
+        // Save test
+        const saveResult = await API.saveTest(test);
+        if (saveResult.success && saveResult.data) {
+            test.id = saveResult.data.id;
+        }
+        
+        // Initialize answers
+        sectionAnswers = {};
+        Object.keys(test.sections).forEach(section => {
+            sectionAnswers[section] = {};
+        });
+        
+        // Start first section
+        const firstSection = Object.keys(test.sections)[0];
+        startSection(firstSection);
+        
+    } catch (error) {
+        Notifications.error('Generation Failed', error.message);
+        document.getElementById('test-generating').classList.add('hidden');
+        document.getElementById('test-setup').classList.remove('hidden');
+    }
+}
+
+function startSection(section) {
+    currentSection = section;
+    currentQuestionIndex = 0;
+    flaggedQuestions = new Set();
+    
+    const sectionInfo = SECTIONS[section];
+    const questions = test.sections[section]?.questions || [];
+    
+    document.getElementById('test-generating').classList.add('hidden');
+    document.getElementById('test-taking').classList.remove('hidden');
+    
+    document.getElementById('test-title').textContent = test.title;
+    document.getElementById('current-section-name').textContent = sectionInfo.name;
+    document.getElementById('total-section-q').textContent = questions.length;
+    
+    // Start timer
+    timeRemaining = sectionInfo.time;
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        if (!isPaused) {
+            timeRemaining--;
+            updateTimerDisplay();
+            if (timeRemaining <= 0) {
+                clearInterval(timer);
+                endSection();
+            }
+        }
+    }, 1000);
+    
+    // Render question navigator
+    renderQuestionNavigator();
+    
+    // Show first question
+    showQuestion(0);
+}
+
+function renderQuestionNavigator() {
+    const questions = test.sections[currentSection]?.questions || [];
+    const nav = document.getElementById('question-navigator');
+    
+    nav.innerHTML = questions.map((_, i) => `
+        <button class="w-8 h-8 rounded text-sm font-medium bg-gray-200 dark:bg-gray-700 hover:bg-primary-400 hover:text-white transition-colors q-nav-btn" data-index="${i}">
+            ${i + 1}
+        </button>
+    `).join('');
+    
+    nav.querySelectorAll('.q-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => showQuestion(parseInt(btn.dataset.index)));
+    });
+}
+
+function showQuestion(index) {
+    const questions = test.sections[currentSection]?.questions || [];
+    if (index < 0 || index >= questions.length) return;
+    
+    currentQuestionIndex = index;
+    const question = questions[index];
+    
+    // Update current question number
+    document.getElementById('current-q-num').textContent = index + 1;
+    
+    // Update progress
+    const answered = Object.keys(sectionAnswers[currentSection] || {}).length;
+    const progress = Math.round((answered / questions.length) * 100);
+    document.getElementById('section-progress-bar').style.width = progress + '%';
+    document.getElementById('section-progress-text').textContent = `${progress}% complete`;
+    
+    // Show passage if available
+    const passageContainer = document.getElementById('passage-container');
+    if (question.passage) {
+        passageContainer.classList.remove('hidden');
+        document.getElementById('passage-content').innerHTML = MarkdownRenderer.render(question.passage);
+    } else {
+        passageContainer.classList.add('hidden');
+    }
+    
+    // Render question
+    const container = document.getElementById('question-container');
+    container.innerHTML = `
+        <div class="mb-6">
+            <span class="badge badge-gray">Question ${index + 1}</span>
+            ${flaggedQuestions.has(index) ? '<span class="badge badge-warning ml-2">Flagged</span>' : ''}
+        </div>
+        <div class="text-lg mb-6 question-text">${Utils.escapeHtml(question.question)}</div>
+        <div class="space-y-3">
+            ${(question.options || question.choices || []).map((opt, i) => {
+                const isSelected = sectionAnswers[currentSection]?.[index] === i;
+                return `
+                    <button class="option-btn w-full text-left p-4 rounded-lg border-2 transition-colors ${isSelected ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-primary-500'}" data-answer="${i}">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 mr-3 font-medium">${String.fromCharCode(65 + i)}</span>
+                        <span class="option-text">${Utils.escapeHtml(opt)}</span>
+                    </button>
+                `;
+            }).join('')}
+        </div>
+    `;
+    
+    // Render math
+    container.querySelectorAll('.question-text, .option-text').forEach(el => {
+        MathRenderer.renderElement(el);
+    });
+    
+    // Add click handlers
+    container.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.answer)));
+    });
+    
+    // Update navigation
+    document.getElementById('prev-q').disabled = index === 0;
+    document.getElementById('next-q').textContent = index === questions.length - 1 ? 'Finish Section' : 'Next';
+    
+    // Update navigator
+    updateQuestionNavigator();
+    
+    // Update flag button
+    const flagBtn = document.getElementById('flag-question');
+    if (flaggedQuestions.has(index)) {
+        flagBtn.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg> Unflag';
+        flagBtn.classList.add('btn-warning');
+        flagBtn.classList.remove('btn-outline');
+    } else {
+        flagBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg> Flag for Review';
+        flagBtn.classList.remove('btn-warning');
+        flagBtn.classList.add('btn-outline');
+    }
+}
+
+function selectAnswer(answer) {
+    if (!sectionAnswers[currentSection]) {
+        sectionAnswers[currentSection] = {};
+    }
+    sectionAnswers[currentSection][currentQuestionIndex] = answer;
+    
+    // Update UI
+    const container = document.getElementById('question-container');
+    container.querySelectorAll('.option-btn').forEach((btn, i) => {
+        if (i === answer) {
+            btn.classList.add('border-primary-500', 'bg-primary-50', 'dark:bg-primary-900/20');
+        } else {
+            btn.classList.remove('border-primary-500', 'bg-primary-50', 'dark:bg-primary-900/20');
+        }
+    });
+    
+    updateQuestionNavigator();
+    
+    // Auto-advance
+    setTimeout(() => navigateQuestion(1), 300);
+}
+
+function updateQuestionNavigator() {
+    document.querySelectorAll('.q-nav-btn').forEach((btn, i) => {
+        btn.classList.remove('bg-primary-500', 'text-white', 'bg-yellow-500');
+        
+        if (i === currentQuestionIndex) {
+            btn.classList.add('ring-2', 'ring-primary-500');
+        } else {
+            btn.classList.remove('ring-2', 'ring-primary-500');
+        }
+        
+        if (flaggedQuestions.has(i)) {
+            btn.classList.add('bg-yellow-500', 'text-white');
+        } else if (sectionAnswers[currentSection]?.[i] !== undefined) {
+            btn.classList.add('bg-primary-500', 'text-white');
+        } else {
+            btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+        }
+    });
+}
+
+function navigateQuestion(direction) {
+    const questions = test.sections[currentSection]?.questions || [];
+    const newIndex = currentQuestionIndex + direction;
+    
+    if (newIndex >= 0 && newIndex < questions.length) {
+        showQuestion(newIndex);
+    } else if (newIndex >= questions.length) {
+        endSection();
+    }
+}
+
+function toggleFlag() {
+    if (flaggedQuestions.has(currentQuestionIndex)) {
+        flaggedQuestions.delete(currentQuestionIndex);
+    } else {
+        flaggedQuestions.add(currentQuestionIndex);
+    }
+    showQuestion(currentQuestionIndex);
+}
+
+function togglePause() {
+    isPaused = !isPaused;
+    const btn = document.getElementById('pause-test');
+    btn.textContent = isPaused ? 'Resume' : 'Pause';
+}
+
+function updateTimerDisplay() {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    document.getElementById('section-timer').textContent = 
+        mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+    
+    if (timeRemaining <= 60) {
+        document.getElementById('section-timer').classList.add('text-red-600');
+    }
+}
+
+function endSection() {
+    if (timer) clearInterval(timer);
+    
+    const sectionInfo = SECTIONS[currentSection];
+    document.getElementById('section-complete-text').textContent = 
+        `You've completed the ${sectionInfo.name} section.`;
+    
+    // Check if more sections
+    const sectionKeys = Object.keys(test.sections);
+    const currentIndex = sectionKeys.indexOf(currentSection);
+    
+    if (currentIndex < sectionKeys.length - 1) {
+        document.getElementById('next-section').textContent = 'Next Section';
+        document.getElementById('section-complete-modal').classList.remove('hidden');
+    } else {
+        // All sections complete - go to results
+        submitTest();
+    }
+}
+
+function moveToNextSection() {
+    const sectionKeys = Object.keys(test.sections);
+    const currentIndex = sectionKeys.indexOf(currentSection);
+    
+    if (currentIndex < sectionKeys.length - 1) {
+        startSection(sectionKeys[currentIndex + 1]);
+    } else {
+        submitTest();
+    }
+}
+
+async function submitTest() {
+    UI.showLoading('Grading your test...');
+    
+    try {
+        const result = await API.gradeTest(test.id, sectionAnswers);
+        
+        if (result.success) {
+            window.location.href = `test-results.html?id=${test.id}`;
+        } else {
+            throw new Error(result.message || 'Failed to grade test');
+        }
+    } catch (error) {
+        UI.hideLoading();
+        Notifications.error('Error', error.message);
+    }
+}
+</script>

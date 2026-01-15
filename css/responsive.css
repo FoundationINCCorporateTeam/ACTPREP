@@ -1,0 +1,439 @@
+/**
+ * ACT Test Prep - Responsive Styles
+ */
+
+/* ==================== Mobile First Breakpoints ==================== */
+
+/* Extra Small (Mobile Portrait) - Default styles */
+
+/* Small (Mobile Landscape) - 640px */
+@media (min-width: 640px) {
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .modal {
+        max-width: 28rem;
+    }
+}
+
+/* Medium (Tablet) - 768px */
+@media (min-width: 768px) {
+    .page-container {
+        padding: 1.5rem;
+    }
+    
+    .grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .quiz-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .split-view {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .chat-container {
+        height: calc(100vh - 200px);
+    }
+}
+
+/* Large (Desktop) - 1024px */
+@media (min-width: 1024px) {
+    main {
+        margin-left: 16rem; /* 256px sidebar */
+    }
+    
+    .grid-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .stat-cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+    
+    .test-interface {
+        grid-template-columns: 350px 1fr;
+    }
+}
+
+/* Extra Large (Wide Desktop) - 1280px */
+@media (min-width: 1280px) {
+    .grid-cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .page-container {
+        max-width: 1400px;
+    }
+}
+
+/* 2XL (Ultra Wide) - 1536px */
+@media (min-width: 1536px) {
+    .grid-cards {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* ==================== Mobile Navigation ==================== */
+
+@media (max-width: 1023px) {
+    #sidebar {
+        position: fixed;
+        left: 0;
+        top: 64px;
+        bottom: 0;
+        width: 280px;
+        transform: translateX(-100%);
+        z-index: 30;
+    }
+    
+    #sidebar.open {
+        transform: translateX(0);
+    }
+    
+    main {
+        margin-left: 0;
+    }
+    
+    footer {
+        margin-left: 0 !important;
+    }
+}
+
+/* ==================== Tablet Specific ==================== */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .header-search {
+        width: 200px;
+    }
+    
+    .quiz-question-nav {
+        grid-template-columns: repeat(10, 1fr);
+    }
+}
+
+/* ==================== Mobile Specific ==================== */
+
+@media (max-width: 767px) {
+    /* Header */
+    #main-header nav {
+        padding: 0 0.75rem;
+    }
+    
+    .header-search {
+        display: none;
+    }
+    
+    /* Typography */
+    h1, .page-title { font-size: 1.5rem; }
+    h2 { font-size: 1.25rem; }
+    h3 { font-size: 1.125rem; }
+    
+    /* Cards */
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-card-value {
+        font-size: 1.5rem;
+    }
+    
+    /* Buttons */
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.25rem;
+    }
+    
+    /* Forms */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    /* Quiz Interface */
+    .quiz-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .quiz-question-nav {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    /* Tables */
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.625rem 0.75rem;
+    }
+    
+    /* Modal */
+    .modal {
+        margin: 1rem;
+        max-height: calc(100vh - 2rem);
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+    
+    /* Chat */
+    .chat-message {
+        max-width: 90%;
+    }
+    
+    /* Footer */
+    footer .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* ==================== Touch-Friendly Targets ==================== */
+
+@media (pointer: coarse) {
+    .btn, button, a, input, select, textarea {
+        min-height: 44px;
+    }
+    
+    .form-checkbox,
+    .form-radio {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    
+    .toggle {
+        width: 3.5rem;
+        height: 2rem;
+    }
+    
+    .toggle-slider::before {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    
+    .nav-link,
+    .sidebar-link,
+    .dropdown-item {
+        min-height: 48px;
+    }
+}
+
+/* ==================== Landscape Orientation ==================== */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    #main-header {
+        height: 56px;
+    }
+    
+    .page-container {
+        padding-top: 56px;
+    }
+    
+    .modal {
+        max-height: 90vh;
+    }
+    
+    .modal-body {
+        max-height: 50vh;
+    }
+}
+
+/* ==================== High Resolution Displays ==================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Ensure sharp text on retina displays */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ==================== Print Styles ==================== */
+
+@media print {
+    /* Hide non-essential elements */
+    #main-header,
+    #sidebar,
+    #mobile-nav,
+    .no-print,
+    .btn,
+    button:not(.print-btn),
+    footer nav {
+        display: none !important;
+    }
+    
+    /* Reset layout */
+    main {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Typography for print */
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: black;
+        background: white;
+    }
+    
+    h1 { font-size: 18pt; }
+    h2 { font-size: 16pt; }
+    h3 { font-size: 14pt; }
+    
+    /* Links */
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+    
+    /* Page breaks */
+    .page-break {
+        page-break-after: always;
+    }
+    
+    .avoid-break {
+        page-break-inside: avoid;
+    }
+    
+    /* Cards for print */
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    /* Tables for print */
+    table {
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+}
+
+/* ==================== Container Queries (Progressive Enhancement) ==================== */
+
+@supports (container-type: inline-size) {
+    .responsive-container {
+        container-type: inline-size;
+    }
+    
+    @container (min-width: 400px) {
+        .container-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @container (min-width: 600px) {
+        .container-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+/* ==================== Dark Mode Responsive ==================== */
+
+@media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+        --bg-primary: #1f2937;
+        --bg-secondary: #111827;
+        --text-primary: #f9fafb;
+        --text-secondary: #9ca3af;
+        --border-color: #374151;
+    }
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .animate-fade-in,
+    .animate-fade-in-up,
+    .animate-scale-in,
+    .animate-slide-in-bottom {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ==================== High Contrast Mode ==================== */
+
+@media (prefers-contrast: high) {
+    :root {
+        --primary-color: #0066cc;
+        --text-primary: #000000;
+        --bg-primary: #ffffff;
+        --border-color: #000000;
+    }
+    
+    .btn-primary {
+        background: #0066cc;
+        border: 2px solid #0066cc;
+    }
+    
+    .card {
+        border: 2px solid #000000;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+}
+
+/* ==================== Focus Visible Polyfill ==================== */
+
+@supports not selector(:focus-visible) {
+    *:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+    }
+}

@@ -1,0 +1,534 @@
+<?php $pageTitle = 'Flashcards - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Flashcards</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div>
+                    <h1 class="page-title">Flashcards</h1>
+                    <p class="page-subtitle">Master concepts with spaced repetition</p>
+                </div>
+                <button id="new-set-btn" class="btn btn-primary mt-4 md:mt-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Create Flashcard Set
+                </button>
+            </div>
+
+            <!-- Flashcard Sets View -->
+            <div id="sets-view">
+                <!-- Generate Form -->
+                <div id="generate-form" class="card mb-8 hidden">
+                    <div class="card-header flex items-center justify-between">
+                        <h2 class="text-lg font-semibold">Generate Flashcard Set</h2>
+                        <button class="btn btn-ghost btn-icon close-form">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <form id="flashcard-form" class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="subject">Subject</label>
+                                    <select id="subject" name="subject" class="form-input form-select" required>
+                                        <option value="english">English</option>
+                                        <option value="math" selected>Math</option>
+                                        <option value="reading">Reading</option>
+                                        <option value="science">Science</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="num-cards">Number of Cards</label>
+                                    <select id="num-cards" name="num_cards" class="form-input form-select">
+                                        <option value="10">10 cards</option>
+                                        <option value="20" selected>20 cards</option>
+                                        <option value="30">30 cards</option>
+                                        <option value="50">50 cards</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="topic">Topic</label>
+                                <input type="text" id="topic" name="topic" class="form-input" placeholder="e.g., Algebra, Grammar Rules, Vocabulary..." required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full md:w-auto">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                Generate Flashcards
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Generation Progress -->
+                <div id="generating" class="card mb-8 hidden">
+                    <div class="card-body text-center py-12">
+                        <div class="loading-spinner mx-auto mb-4"></div>
+                        <h3 class="text-lg font-semibold mb-2">Creating Flashcards...</h3>
+                        <p class="text-gray-500">Generating your study cards</p>
+                    </div>
+                </div>
+
+                <!-- Flashcard Sets Grid -->
+                <div id="sets-grid" class="grid-cards">
+                    <!-- Sets will be rendered here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🃏</div>
+                        <h3 class="empty-state-title">No Flashcard Sets</h3>
+                        <p class="empty-state-text">Create your first flashcard set to start studying!</p>
+                        <button class="btn btn-primary" id="empty-create-btn">Create Flashcards</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study View -->
+            <div id="study-view" class="hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <button id="back-to-sets" class="btn btn-ghost">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        All Sets
+                    </button>
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm text-gray-500">
+                            Card <span id="current-card-num">1</span> of <span id="total-cards">0</span>
+                        </span>
+                        <button id="shuffle-btn" class="btn btn-secondary btn-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Shuffle
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress -->
+                <div class="card mb-6">
+                    <div class="card-body py-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium">Progress</span>
+                            <div class="flex items-center gap-4 text-sm">
+                                <span class="text-green-600">✓ <span id="mastered-count">0</span> mastered</span>
+                                <span class="text-yellow-600">📖 <span id="learning-count">0</span> learning</span>
+                                <span class="text-gray-400">○ <span id="new-count">0</span> new</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="study-progress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashcard -->
+                <div class="max-w-2xl mx-auto">
+                    <div id="flashcard" class="card cursor-pointer hover:shadow-lg transition-all duration-300 perspective-1000" style="min-height: 300px;">
+                        <div id="card-inner" class="card-body flex items-center justify-center relative" style="min-height: 300px; transition: transform 0.6s; transform-style: preserve-3d;">
+                            <!-- Front -->
+                            <div id="card-front" class="absolute inset-0 flex items-center justify-center p-8 backface-hidden">
+                                <div class="text-center">
+                                    <div class="text-2xl font-medium mb-4 card-question"></div>
+                                    <p class="text-sm text-gray-400">Click to reveal answer</p>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div id="card-back" class="absolute inset-0 flex items-center justify-center p-8 backface-hidden" style="transform: rotateY(180deg);">
+                                <div class="text-center">
+                                    <div class="text-xl card-answer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="prev-card" class="btn btn-secondary">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <button id="mark-hard" class="btn btn-danger">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            Hard
+                        </button>
+                        <button id="mark-good" class="btn btn-warning">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Good
+                        </button>
+                        <button id="mark-easy" class="btn btn-success">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Easy
+                        </button>
+                        <button id="next-card" class="btn btn-secondary">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Keyboard hints -->
+                    <p class="text-center text-sm text-gray-400 mt-4">
+                        Space to flip • ← → to navigate • 1-3 to rate
+                    </p>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let flashcardSets = [];
+let currentSet = null;
+let currentCardIndex = 0;
+let isFlipped = false;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check for URL params
+    const params = Utils.getQueryParams();
+    if (params.subject) {
+        document.getElementById('subject').value = params.subject;
+    }
+    if (params.topic) {
+        document.getElementById('topic').value = params.topic;
+        document.getElementById('generate-form').classList.remove('hidden');
+    }
+    
+    setupEventListeners();
+    await loadSets();
+});
+
+function setupEventListeners() {
+    // New set
+    document.getElementById('new-set-btn').addEventListener('click', showGenerateForm);
+    document.getElementById('empty-create-btn')?.addEventListener('click', showGenerateForm);
+    
+    // Close form
+    document.querySelectorAll('.close-form').forEach(btn => {
+        btn.addEventListener('click', hideGenerateForm);
+    });
+    
+    // Form submission
+    document.getElementById('flashcard-form').addEventListener('submit', handleGenerate);
+    
+    // Study view
+    document.getElementById('back-to-sets').addEventListener('click', showSetsView);
+    document.getElementById('flashcard').addEventListener('click', flipCard);
+    document.getElementById('shuffle-btn').addEventListener('click', shuffleCards);
+    
+    // Navigation
+    document.getElementById('prev-card').addEventListener('click', () => navigateCard(-1));
+    document.getElementById('next-card').addEventListener('click', () => navigateCard(1));
+    
+    // Mastery buttons
+    document.getElementById('mark-hard').addEventListener('click', () => markCard('hard'));
+    document.getElementById('mark-good').addEventListener('click', () => markCard('good'));
+    document.getElementById('mark-easy').addEventListener('click', () => markCard('easy'));
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', handleKeyboard);
+}
+
+function handleKeyboard(e) {
+    if (document.getElementById('study-view').classList.contains('hidden')) return;
+    
+    switch(e.key) {
+        case ' ':
+            e.preventDefault();
+            flipCard();
+            break;
+        case 'ArrowLeft':
+            navigateCard(-1);
+            break;
+        case 'ArrowRight':
+            navigateCard(1);
+            break;
+        case '1':
+            markCard('hard');
+            break;
+        case '2':
+            markCard('good');
+            break;
+        case '3':
+            markCard('easy');
+            break;
+    }
+}
+
+function showGenerateForm() {
+    document.getElementById('generate-form').classList.remove('hidden');
+}
+
+function hideGenerateForm() {
+    document.getElementById('generate-form').classList.add('hidden');
+}
+
+async function loadSets() {
+    try {
+        const result = await API.getFlashcardSets();
+        
+        if (result.success && result.data) {
+            flashcardSets = result.data;
+            renderSets();
+        }
+    } catch (error) {
+        console.error('Failed to load sets:', error);
+    }
+}
+
+function renderSets() {
+    const container = document.getElementById('sets-grid');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (flashcardSets.length === 0) {
+        container.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+    }
+    
+    emptyState.classList.add('hidden');
+    container.classList.remove('hidden');
+    
+    container.innerHTML = flashcardSets.map(set => {
+        const mastered = set.cards?.filter(c => c.mastery === 'mastered').length || 0;
+        const total = set.cards?.length || 0;
+        const progress = total > 0 ? Math.round((mastered / total) * 100) : 0;
+        
+        return `
+            <div class="card hover-lift cursor-pointer" onclick="startStudy('${set.id}')">
+                <div class="card-body">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="badge badge-${set.subject}">${Utils.capitalize(set.subject)}</span>
+                        <span class="text-2xl">${getSetEmoji(set.subject)}</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">${Utils.escapeHtml(set.title || set.topic)}</h3>
+                    <p class="text-sm text-gray-500 mb-4">${total} cards</p>
+                    <div class="mb-2">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-500">Mastered</span>
+                            <span class="font-medium">${progress}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${progress === 100 ? 'bg-green-500' : ''}" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-400">
+                        ${set.last_studied ? `Studied ${Utils.timeAgo(set.last_studied)}` : 'Not started'}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function getSetEmoji(subject) {
+    const emojis = {
+        english: '📖',
+        math: '🔢',
+        reading: '📚',
+        science: '🔬'
+    };
+    return emojis[subject] || '🃏';
+}
+
+async function handleGenerate(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const params = {
+        subject: formData.get('subject'),
+        topic: formData.get('topic'),
+        num_cards: parseInt(formData.get('num_cards'))
+    };
+    
+    hideGenerateForm();
+    document.getElementById('generating').classList.remove('hidden');
+    
+    try {
+        const result = await Poll.generateFlashcards(params, {
+            onProgress: () => {}
+        });
+        
+        const setData = {
+            ...params,
+            title: params.topic,
+            cards: result.cards || result,
+            created_at: Math.floor(Date.now() / 1000)
+        };
+        
+        const saveResult = await API.saveFlashcardSet(setData);
+        
+        if (saveResult.success) {
+            Notifications.success('Created!', 'Flashcard set is ready');
+            await loadSets();
+            
+            if (saveResult.data?.id) {
+                startStudy(saveResult.data.id);
+            }
+        }
+        
+    } catch (error) {
+        Notifications.error('Error', error.message);
+    } finally {
+        document.getElementById('generating').classList.add('hidden');
+    }
+}
+
+async function startStudy(setId) {
+    const set = flashcardSets.find(s => s.id === setId);
+    if (!set) {
+        try {
+            const result = await API.getFlashcardSet(setId);
+            if (result.success && result.data) {
+                currentSet = result.data;
+            }
+        } catch (error) {
+            Notifications.error('Error', 'Failed to load flashcard set');
+            return;
+        }
+    } else {
+        currentSet = set;
+    }
+    
+    if (!currentSet || !currentSet.cards || currentSet.cards.length === 0) {
+        Notifications.error('Error', 'No cards in this set');
+        return;
+    }
+    
+    currentCardIndex = 0;
+    isFlipped = false;
+    
+    document.getElementById('sets-view').classList.add('hidden');
+    document.getElementById('study-view').classList.remove('hidden');
+    
+    document.getElementById('total-cards').textContent = currentSet.cards.length;
+    
+    updateProgress();
+    showCard();
+}
+
+function showSetsView() {
+    document.getElementById('study-view').classList.add('hidden');
+    document.getElementById('sets-view').classList.remove('hidden');
+    currentSet = null;
+}
+
+function showCard() {
+    const card = currentSet.cards[currentCardIndex];
+    if (!card) return;
+    
+    document.getElementById('current-card-num').textContent = currentCardIndex + 1;
+    
+    // Reset flip
+    isFlipped = false;
+    document.getElementById('card-inner').style.transform = '';
+    
+    // Set content
+    document.querySelector('.card-question').innerHTML = Utils.escapeHtml(card.front || card.question);
+    document.querySelector('.card-answer').innerHTML = Utils.escapeHtml(card.back || card.answer);
+    
+    // Render math
+    MathRenderer.renderElement(document.querySelector('.card-question'));
+    MathRenderer.renderElement(document.querySelector('.card-answer'));
+}
+
+function flipCard() {
+    isFlipped = !isFlipped;
+    document.getElementById('card-inner').style.transform = isFlipped ? 'rotateY(180deg)' : '';
+}
+
+function navigateCard(direction) {
+    const newIndex = currentCardIndex + direction;
+    if (newIndex >= 0 && newIndex < currentSet.cards.length) {
+        currentCardIndex = newIndex;
+        showCard();
+    }
+}
+
+function shuffleCards() {
+    currentSet.cards = Utils.shuffle(currentSet.cards);
+    currentCardIndex = 0;
+    showCard();
+    Notifications.info('Shuffled', 'Cards have been randomized');
+}
+
+async function markCard(level) {
+    const card = currentSet.cards[currentCardIndex];
+    
+    // Map level to mastery
+    const masteryMap = {
+        hard: 'learning',
+        good: 'reviewing',
+        easy: 'mastered'
+    };
+    
+    card.mastery = masteryMap[level];
+    
+    // Save to server
+    try {
+        await API.updateCardMastery(currentSet.id, currentCardIndex, card.mastery);
+    } catch (error) {
+        console.error('Failed to save mastery:', error);
+    }
+    
+    updateProgress();
+    
+    // Auto advance
+    if (currentCardIndex < currentSet.cards.length - 1) {
+        navigateCard(1);
+    } else {
+        // Session complete
+        const mastered = currentSet.cards.filter(c => c.mastery === 'mastered').length;
+        if (mastered === currentSet.cards.length) {
+            Notifications.success('🎉 Complete!', 'You\'ve mastered all cards!');
+        } else {
+            Notifications.info('Session Complete', `${mastered}/${currentSet.cards.length} cards mastered`);
+        }
+    }
+}
+
+function updateProgress() {
+    const cards = currentSet.cards;
+    const mastered = cards.filter(c => c.mastery === 'mastered').length;
+    const learning = cards.filter(c => c.mastery === 'learning' || c.mastery === 'reviewing').length;
+    const newCards = cards.filter(c => !c.mastery).length;
+    
+    document.getElementById('mastered-count').textContent = mastered;
+    document.getElementById('learning-count').textContent = learning;
+    document.getElementById('new-count').textContent = newCards;
+    
+    const progress = Math.round((mastered / cards.length) * 100);
+    document.getElementById('study-progress').style.width = progress + '%';
+}
+</script>
+
+<style>
+.perspective-1000 {
+    perspective: 1000px;
+}
+.backface-hidden {
+    backface-visibility: hidden;
+}
+#card-inner {
+    transform-style: preserve-3d;
+}
+</style>

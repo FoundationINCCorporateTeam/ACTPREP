@@ -1,0 +1,414 @@
+<?php $pageTitle = 'Profile - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Profile</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="page-title">My Profile</h1>
+                <p class="page-subtitle">Manage your account and view achievements</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Profile Card -->
+                <div class="lg:col-span-1">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <!-- Avatar -->
+                            <div class="relative inline-block mb-4">
+                                <div id="profile-avatar" class="w-24 h-24 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-4xl text-white mx-auto">
+                                    👤
+                                </div>
+                                <button id="change-avatar" class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center text-gray-500 hover:text-primary-500 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <h2 class="text-xl font-bold" id="profile-name">Loading...</h2>
+                            <p class="text-gray-500" id="profile-email">Loading...</p>
+                            
+                            <!-- Level Badge -->
+                            <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white">
+                                <span class="text-lg">⭐</span>
+                                <span class="font-medium">Level <span id="profile-level">1</span></span>
+                            </div>
+                            
+                            <!-- XP Progress -->
+                            <div class="mt-4">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-500">XP Progress</span>
+                                    <span id="xp-progress-text">0/100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="xp-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Card -->
+                    <div class="card mt-6">
+                        <div class="card-body">
+                            <h3 class="font-semibold mb-4">Quick Stats</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-500">🔥 Day Streak</span>
+                                    <span class="font-bold" id="stat-streak">0</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-500">📚 Lessons</span>
+                                    <span class="font-bold" id="stat-lessons">0</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-500">📝 Quizzes</span>
+                                    <span class="font-bold" id="stat-quizzes">0</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-500">⏱️ Study Time</span>
+                                    <span class="font-bold" id="stat-time">0h</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-500">📊 Avg Score</span>
+                                    <span class="font-bold" id="stat-avg">--%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Profile Edit -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Account Information</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="profile-form" class="space-y-6">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="name">Name</label>
+                                        <input type="text" id="name" name="name" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input type="email" id="email" name="email" class="form-input" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="target-score">Target ACT Score</label>
+                                    <input type="number" id="target-score" name="target_score" class="form-input" min="1" max="36">
+                                    <p class="form-hint">Your goal composite score (1-36)</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="test-date">Test Date</label>
+                                    <input type="date" id="test-date" name="test_date" class="form-input">
+                                    <p class="form-hint">When are you taking the ACT?</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Change Password -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Change Password</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="password-form" class="space-y-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="current-password">Current Password</label>
+                                    <input type="password" id="current-password" name="current_password" class="form-input" required>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="new-password">New Password</label>
+                                        <input type="password" id="new-password" name="new_password" class="form-input" required minlength="8">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="confirm-password">Confirm Password</label>
+                                        <input type="password" id="confirm-password" name="confirm_password" class="form-input" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Update Password</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="card">
+                        <div class="card-header flex items-center justify-between">
+                            <h2 class="font-semibold">Achievements</h2>
+                            <span class="text-sm text-gray-500"><span id="achievement-count">0</span>/20 Unlocked</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="achievements-grid" class="grid grid-cols-4 md:grid-cols-5 gap-4">
+                                <!-- Achievements will be rendered here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Study Calendar -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Study Calendar</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="calendar-grid" class="grid grid-cols-7 gap-1">
+                                <!-- Calendar will be rendered here -->
+                            </div>
+                            <div class="flex items-center justify-center gap-4 mt-4 text-sm text-gray-500">
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded bg-gray-200 dark:bg-gray-700"></span> No study
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded bg-green-300"></span> Light
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded bg-green-500"></span> Moderate
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded bg-green-700"></span> Intense
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+const ACHIEVEMENTS = [
+    { id: 'first_lesson', emoji: '📚', name: 'First Steps', desc: 'Complete your first lesson' },
+    { id: 'quiz_ace', emoji: '🎯', name: 'Quiz Ace', desc: 'Score 100% on a quiz' },
+    { id: 'week_streak', emoji: '🔥', name: 'Week Warrior', desc: '7-day study streak' },
+    { id: 'month_streak', emoji: '💪', name: 'Dedicated', desc: '30-day study streak' },
+    { id: 'ten_quizzes', emoji: '📝', name: 'Quiz Master', desc: 'Complete 10 quizzes' },
+    { id: 'perfect_math', emoji: '🧮', name: 'Math Genius', desc: '100% on a math quiz' },
+    { id: 'perfect_english', emoji: '✏️', name: 'Grammar Pro', desc: '100% on an English quiz' },
+    { id: 'speed_demon', emoji: '⚡', name: 'Speed Demon', desc: 'Finish a quiz in half time' },
+    { id: 'essay_writer', emoji: '✍️', name: 'Wordsmith', desc: 'Complete an essay' },
+    { id: 'high_score', emoji: '🏆', name: 'High Achiever', desc: 'Score 30+ on practice test' },
+    { id: 'flashcard_master', emoji: '🃏', name: 'Card Shark', desc: 'Master 100 flashcards' },
+    { id: 'all_subjects', emoji: '🌟', name: 'Well Rounded', desc: 'Study all subjects' },
+    { id: 'night_owl', emoji: '🦉', name: 'Night Owl', desc: 'Study after midnight' },
+    { id: 'early_bird', emoji: '🐦', name: 'Early Bird', desc: 'Study before 6 AM' },
+    { id: 'helper', emoji: '🤝', name: 'Knowledge Seeker', desc: 'Ask AI tutor 10 questions' },
+    { id: 'planner', emoji: '📅', name: 'Organized', desc: 'Create a study plan' },
+    { id: 'improver', emoji: '📈', name: 'Rising Star', desc: 'Improve score by 5 points' },
+    { id: 'consistent', emoji: '⭐', name: 'Consistent', desc: 'Study 5 days in a row' },
+    { id: 'explorer', emoji: '🗺️', name: 'Explorer', desc: 'Try all features' },
+    { id: 'champion', emoji: '👑', name: 'Champion', desc: 'Score 36 composite' }
+];
+
+let profile = {};
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadProfile();
+    setupEventListeners();
+    renderCalendar();
+});
+
+async function loadProfile() {
+    try {
+        const [profileResult, statsResult] = await Promise.all([
+            API.getProfile(),
+            API.getStatistics()
+        ]);
+        
+        if (profileResult.success && profileResult.data) {
+            profile = profileResult.data;
+            
+            // Update display
+            document.getElementById('profile-name').textContent = profile.name || 'Student';
+            document.getElementById('profile-email').textContent = profile.email || '';
+            document.getElementById('profile-level').textContent = profile.level || 1;
+            
+            // Avatar initial
+            if (profile.name) {
+                document.getElementById('profile-avatar').textContent = profile.name.charAt(0).toUpperCase();
+            }
+            
+            // Form fields
+            document.getElementById('name').value = profile.name || '';
+            document.getElementById('email').value = profile.email || '';
+            document.getElementById('target-score').value = profile.target_score || '';
+            
+            if (profile.test_date) {
+                const date = new Date(profile.test_date * 1000);
+                document.getElementById('test-date').value = date.toISOString().split('T')[0];
+            }
+            
+            // XP
+            const xp = profile.xp || 0;
+            const level = profile.level || 1;
+            const xpForLevel = level * 100;
+            const xpProgress = (xp % 100);
+            document.getElementById('xp-progress-text').textContent = `${xpProgress}/${100}`;
+            document.getElementById('xp-bar').style.width = xpProgress + '%';
+        }
+        
+        if (statsResult.success && statsResult.data) {
+            const stats = statsResult.data;
+            
+            document.getElementById('stat-streak').textContent = stats.user?.streak || 0;
+            document.getElementById('stat-lessons').textContent = stats.lessons?.completed || 0;
+            document.getElementById('stat-quizzes').textContent = stats.quizzes?.completed_quizzes || 0;
+            document.getElementById('stat-time').textContent = formatStudyTime(stats.user?.study_time || 0);
+            document.getElementById('stat-avg').textContent = (stats.quizzes?.average_score || 0) + '%';
+            
+            // Achievements
+            renderAchievements(stats.user?.achievements || []);
+        }
+        
+    } catch (error) {
+        console.error('Failed to load profile:', error);
+    }
+}
+
+function formatStudyTime(minutes) {
+    if (minutes < 60) return minutes + 'm';
+    const hours = Math.floor(minutes / 60);
+    return hours + 'h';
+}
+
+function setupEventListeners() {
+    // Profile form
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            target_score: parseInt(formData.get('target_score')) || null,
+            test_date: formData.get('test_date') || null
+        };
+        
+        try {
+            const result = await API.updateProfile(data);
+            
+            if (result.success) {
+                Notifications.success('Saved', 'Profile updated successfully');
+                document.getElementById('profile-name').textContent = data.name;
+                document.getElementById('profile-avatar').textContent = data.name.charAt(0).toUpperCase();
+            } else {
+                throw new Error(result.message);
+            }
+        } catch (error) {
+            Notifications.error('Error', error.message);
+        }
+    });
+    
+    // Password form
+    document.getElementById('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const currentPassword = formData.get('current_password');
+        const newPassword = formData.get('new_password');
+        const confirmPassword = formData.get('confirm_password');
+        
+        if (newPassword !== confirmPassword) {
+            Notifications.error('Error', 'Passwords do not match');
+            return;
+        }
+        
+        if (newPassword.length < 8) {
+            Notifications.error('Error', 'Password must be at least 8 characters');
+            return;
+        }
+        
+        try {
+            const result = await API.changePassword(currentPassword, newPassword);
+            
+            if (result.success) {
+                Notifications.success('Success', 'Password changed successfully');
+                e.target.reset();
+            } else {
+                throw new Error(result.message || 'Failed to change password');
+            }
+        } catch (error) {
+            Notifications.error('Error', error.message);
+        }
+    });
+    
+    // Change avatar
+    document.getElementById('change-avatar').addEventListener('click', () => {
+        Notifications.info('Coming Soon', 'Avatar customization is not yet available');
+    });
+}
+
+function renderAchievements(unlockedIds) {
+    const container = document.getElementById('achievements-grid');
+    
+    container.innerHTML = ACHIEVEMENTS.map(achievement => {
+        const isUnlocked = unlockedIds.includes(achievement.id);
+        return `
+            <div class="text-center p-3 rounded-lg ${isUnlocked ? 'bg-primary-50 dark:bg-primary-900/20' : 'opacity-30'}" title="${achievement.name}: ${achievement.desc}">
+                <div class="text-3xl mb-1">${achievement.emoji}</div>
+                <div class="text-xs font-medium truncate">${achievement.name}</div>
+            </div>
+        `;
+    }).join('');
+    
+    document.getElementById('achievement-count').textContent = unlockedIds.length;
+}
+
+function renderCalendar() {
+    const container = document.getElementById('calendar-grid');
+    const today = new Date();
+    const daysToShow = 35; // 5 weeks
+    
+    // Generate mock study data
+    const studyData = {};
+    for (let i = 0; i < daysToShow; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - (daysToShow - 1 - i));
+        const dateStr = date.toISOString().split('T')[0];
+        studyData[dateStr] = Math.random() > 0.4 ? Math.floor(Math.random() * 90) : 0;
+    }
+    
+    // Day labels
+    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    let html = days.map(d => `<div class="text-center text-xs text-gray-400">${d}</div>`).join('');
+    
+    // Calendar cells
+    for (let i = 0; i < daysToShow; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - (daysToShow - 1 - i));
+        const dateStr = date.toISOString().split('T')[0];
+        const minutes = studyData[dateStr] || 0;
+        
+        let bgClass = 'bg-gray-200 dark:bg-gray-700';
+        if (minutes > 0) {
+            if (minutes < 30) bgClass = 'bg-green-300';
+            else if (minutes < 60) bgClass = 'bg-green-500';
+            else bgClass = 'bg-green-700';
+        }
+        
+        const isToday = dateStr === today.toISOString().split('T')[0];
+        
+        html += `
+            <div class="aspect-square rounded ${bgClass} ${isToday ? 'ring-2 ring-primary-500' : ''}" 
+                 title="${dateStr}: ${minutes}min"></div>
+        `;
+    }
+    
+    container.innerHTML = html;
+}
+</script>

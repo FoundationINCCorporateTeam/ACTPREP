@@ -1,0 +1,433 @@
+<?php $pageTitle = 'Lessons - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Lessons</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div>
+                    <h1 class="page-title">Lessons</h1>
+                    <p class="page-subtitle">Generate AI-powered lessons on any ACT topic</p>
+                </div>
+                <button id="new-lesson-btn" class="btn btn-primary mt-4 md:mt-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Generate New Lesson
+                </button>
+            </div>
+
+            <!-- Generate Lesson Form -->
+            <div id="generate-form-container" class="card mb-8 hidden">
+                <div class="card-header flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">Generate New Lesson</h2>
+                    <button class="btn btn-ghost btn-icon close-form">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="generate-lesson-form" class="grid md:grid-cols-2 gap-6">
+                        <!-- Subject -->
+                        <div class="form-group">
+                            <label class="form-label" for="subject">Subject</label>
+                            <select id="subject" name="subject" class="form-input form-select" required>
+                                <option value="english">English</option>
+                                <option value="math" selected>Math</option>
+                                <option value="reading">Reading</option>
+                                <option value="science">Science</option>
+                                <option value="writing">Writing</option>
+                            </select>
+                        </div>
+
+                        <!-- Difficulty -->
+                        <div class="form-group">
+                            <label class="form-label" for="difficulty">Difficulty</label>
+                            <select id="difficulty" name="difficulty" class="form-input form-select">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="expert">Expert</option>
+                            </select>
+                        </div>
+
+                        <!-- Topic -->
+                        <div class="form-group md:col-span-2">
+                            <label class="form-label" for="topic">Topic</label>
+                            <div class="relative">
+                                <input type="text" id="topic" name="topic" class="form-input" placeholder="Enter a topic or select from suggestions..." required list="topic-suggestions">
+                                <datalist id="topic-suggestions"></datalist>
+                            </div>
+                            <p class="form-hint">Type your own topic or select from suggestions based on subject</p>
+                        </div>
+
+                        <!-- Length -->
+                        <div class="form-group">
+                            <label class="form-label" for="length">Lesson Length</label>
+                            <select id="length" name="length" class="form-input form-select">
+                                <option value="short">Short (~5 minutes)</option>
+                                <option value="medium" selected>Medium (~15 minutes)</option>
+                                <option value="long">Long (~30 minutes)</option>
+                            </select>
+                        </div>
+
+                        <!-- AI Model -->
+                        <div class="form-group">
+                            <label class="form-label" for="model">AI Model</label>
+                            <select id="model" name="model" class="form-input form-select">
+                                <option value="deepseek-v3.2">DeepSeek V3.2 (Recommended)</option>
+                                <option value="glm-4.7">GLM 4.7 Thinking</option>
+                                <option value="llama-3.1">Llama 3.1 Large</option>
+                                <option value="minimax-m2.1">MiniMax M2.1</option>
+                                <option value="mistral-large">Mistral Large 3</option>
+                                <option value="kimi-k2">Kimi K2 Thinking</option>
+                            </select>
+                        </div>
+
+                        <!-- Focus Areas -->
+                        <div class="form-group md:col-span-2">
+                            <label class="form-label">Focus Areas</label>
+                            <div class="flex flex-wrap gap-2">
+                                <label class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="concepts" checked class="form-checkbox">
+                                    <span class="text-sm">Concepts</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="examples" checked class="form-checkbox">
+                                    <span class="text-sm">Examples</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="practice" class="form-checkbox">
+                                    <span class="text-sm">Practice Problems</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    <input type="checkbox" name="focus[]" value="strategies" class="form-checkbox">
+                                    <span class="text-sm">Test Strategies</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="md:col-span-2">
+                            <button type="submit" class="btn btn-primary w-full md:w-auto">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                Generate Lesson
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Generation Progress -->
+            <div id="generation-progress" class="card mb-8 hidden">
+                <div class="card-body text-center py-12">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <h3 class="text-lg font-semibold mb-2">Generating Your Lesson...</h3>
+                    <p class="text-gray-500 mb-4" id="progress-text">Preparing content...</p>
+                    <div class="max-w-md mx-auto">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2"><span id="progress-percent">0</span>%</p>
+                    </div>
+                    <button id="cancel-generation" class="btn btn-ghost mt-4">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Filters and Search -->
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <div class="flex-1 relative">
+                    <input type="text" id="search-lessons" class="form-input pl-10" placeholder="Search lessons...">
+                    <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <select id="filter-subject" class="form-input form-select w-full md:w-40">
+                    <option value="">All Subjects</option>
+                    <option value="english">English</option>
+                    <option value="math">Math</option>
+                    <option value="reading">Reading</option>
+                    <option value="science">Science</option>
+                    <option value="writing">Writing</option>
+                </select>
+                <select id="filter-difficulty" class="form-input form-select w-full md:w-40">
+                    <option value="">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="expert">Expert</option>
+                </select>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary btn-icon view-toggle active" data-view="grid" title="Grid View">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                        </svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon view-toggle" data-view="list" title="List View">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lessons Grid -->
+            <div id="lessons-grid" class="grid-cards">
+                <!-- Lessons will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📚</div>
+                    <h3 class="empty-state-title">No Lessons Yet</h3>
+                    <p class="empty-state-text">Generate your first AI-powered lesson to get started!</p>
+                    <button class="btn btn-primary" id="empty-new-lesson">Generate Lesson</button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="hidden">
+                <div class="grid-cards">
+                    ${UI.skeleton('card', 6)}
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+// Topic suggestions by subject
+const topicSuggestions = {
+    english: ['Grammar Rules', 'Punctuation', 'Sentence Structure', 'Subject-Verb Agreement', 'Verb Tense', 'Pronoun Usage', 'Modifiers', 'Parallelism', 'Rhetorical Skills', 'Organization', 'Style', 'Word Choice'],
+    math: ['Algebra', 'Geometry', 'Trigonometry', 'Statistics', 'Pre-Algebra', 'Linear Equations', 'Quadratic Equations', 'Functions', 'Coordinate Geometry', 'Plane Geometry', 'Word Problems', 'Ratios and Proportions'],
+    reading: ['Main Idea', 'Supporting Details', 'Inference', 'Vocabulary in Context', 'Author\'s Purpose', 'Tone and Style', 'Comparing Passages', 'Literary Devices', 'Text Structure', 'Critical Analysis'],
+    science: ['Data Interpretation', 'Scientific Investigation', 'Experimental Design', 'Biology Concepts', 'Chemistry Concepts', 'Physics Concepts', 'Earth Science', 'Graph Analysis', 'Conflicting Viewpoints', 'Scientific Method'],
+    writing: ['Essay Structure', 'Thesis Statements', 'Supporting Arguments', 'Counterarguments', 'Conclusion Writing', 'Grammar in Essays', 'Persuasive Techniques', 'Evidence and Examples']
+};
+
+let currentView = 'grid';
+let lessons = [];
+let currentJobId = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Toggle generate form
+    document.getElementById('new-lesson-btn').addEventListener('click', () => {
+        document.getElementById('generate-form-container').classList.remove('hidden');
+    });
+    
+    document.getElementById('empty-new-lesson')?.addEventListener('click', () => {
+        document.getElementById('generate-form-container').classList.remove('hidden');
+    });
+    
+    document.querySelectorAll('.close-form').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('generate-form-container').classList.add('hidden');
+        });
+    });
+    
+    // Update topic suggestions based on subject
+    const subjectSelect = document.getElementById('subject');
+    const topicInput = document.getElementById('topic');
+    const datalist = document.getElementById('topic-suggestions');
+    
+    function updateTopicSuggestions() {
+        const subject = subjectSelect.value;
+        const suggestions = topicSuggestions[subject] || [];
+        datalist.innerHTML = suggestions.map(s => `<option value="${s}">`).join('');
+    }
+    
+    subjectSelect.addEventListener('change', updateTopicSuggestions);
+    updateTopicSuggestions();
+    
+    // Generate lesson form submission
+    document.getElementById('generate-lesson-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const focusAreas = Array.from(formData.getAll('focus[]'));
+        
+        const params = {
+            subject: formData.get('subject'),
+            topic: formData.get('topic'),
+            difficulty: formData.get('difficulty'),
+            length: formData.get('length'),
+            model: formData.get('model'),
+            focus_areas: focusAreas
+        };
+        
+        // Show progress
+        document.getElementById('generate-form-container').classList.add('hidden');
+        document.getElementById('generation-progress').classList.remove('hidden');
+        
+        try {
+            const result = await Poll.generateLesson(params, {
+                onProgress: (progress) => {
+                    document.getElementById('progress-bar').style.width = progress.progress + '%';
+                    document.getElementById('progress-percent').textContent = Math.round(progress.progress);
+                    
+                    if (progress.progress < 30) {
+                        document.getElementById('progress-text').textContent = 'Preparing content...';
+                    } else if (progress.progress < 60) {
+                        document.getElementById('progress-text').textContent = 'Generating lesson material...';
+                    } else if (progress.progress < 90) {
+                        document.getElementById('progress-text').textContent = 'Adding examples and practice...';
+                    } else {
+                        document.getElementById('progress-text').textContent = 'Finalizing lesson...';
+                    }
+                }
+            });
+            
+            // Save the lesson
+            const saveResult = await API.saveLesson({
+                title: params.topic,
+                subject: params.subject,
+                topic: params.topic,
+                difficulty: params.difficulty,
+                length: params.length,
+                content: result.content,
+                model: result.model
+            });
+            
+            if (saveResult.success) {
+                Notifications.success('Lesson Generated!', 'Your lesson is ready to view');
+                // Redirect to view the lesson
+                window.location.href = `lesson-view.html?id=${saveResult.data.id}`;
+            } else {
+                throw new Error(saveResult.message || 'Failed to save lesson');
+            }
+        } catch (error) {
+            Notifications.error('Generation Failed', error.message);
+            document.getElementById('generation-progress').classList.add('hidden');
+            document.getElementById('generate-form-container').classList.remove('hidden');
+        }
+    });
+    
+    // Cancel generation
+    document.getElementById('cancel-generation').addEventListener('click', () => {
+        if (currentJobId) {
+            Poll.cancel(currentJobId);
+        }
+        document.getElementById('generation-progress').classList.add('hidden');
+    });
+    
+    // View toggle
+    document.querySelectorAll('.view-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.view-toggle').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentView = btn.dataset.view;
+            renderLessons();
+        });
+    });
+    
+    // Filters
+    document.getElementById('search-lessons').addEventListener('input', Utils.debounce(renderLessons, 300));
+    document.getElementById('filter-subject').addEventListener('change', renderLessons);
+    document.getElementById('filter-difficulty').addEventListener('change', renderLessons);
+    
+    // Load lessons
+    await loadLessons();
+});
+
+async function loadLessons() {
+    document.getElementById('loading-state').classList.remove('hidden');
+    document.getElementById('lessons-grid').classList.add('hidden');
+    document.getElementById('empty-state').classList.add('hidden');
+    
+    try {
+        const result = await API.getLessons();
+        if (result.success) {
+            lessons = result.data || [];
+        }
+    } catch (error) {
+        console.error('Failed to load lessons:', error);
+        lessons = [];
+    }
+    
+    document.getElementById('loading-state').classList.add('hidden');
+    renderLessons();
+}
+
+function renderLessons() {
+    const search = document.getElementById('search-lessons').value.toLowerCase();
+    const subjectFilter = document.getElementById('filter-subject').value;
+    const difficultyFilter = document.getElementById('filter-difficulty').value;
+    
+    let filtered = lessons.filter(lesson => {
+        if (search && !lesson.title?.toLowerCase().includes(search) && !lesson.topic?.toLowerCase().includes(search)) {
+            return false;
+        }
+        if (subjectFilter && lesson.subject !== subjectFilter) return false;
+        if (difficultyFilter && lesson.difficulty !== difficultyFilter) return false;
+        return true;
+    });
+    
+    const container = document.getElementById('lessons-grid');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (filtered.length === 0) {
+        container.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+    }
+    
+    emptyState.classList.add('hidden');
+    container.classList.remove('hidden');
+    
+    if (currentView === 'grid') {
+        container.className = 'grid-cards';
+        container.innerHTML = filtered.map(lesson => `
+            <div class="card hover-lift cursor-pointer" onclick="window.location.href='lesson-view.html?id=${lesson.id}'">
+                <div class="card-body">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="badge badge-${lesson.subject}">${Utils.capitalize(lesson.subject)}</span>
+                        <span class="badge badge-${lesson.difficulty === 'beginner' ? 'success' : lesson.difficulty === 'expert' ? 'danger' : 'primary'}">${Utils.capitalize(lesson.difficulty)}</span>
+                    </div>
+                    <h3 class="font-semibold mb-2 line-clamp-2">${Utils.escapeHtml(lesson.title || lesson.topic)}</h3>
+                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">${Utils.escapeHtml(MarkdownRenderer.excerpt(lesson.content, 100))}</p>
+                    <div class="flex items-center justify-between text-sm text-gray-400">
+                        <span>${lesson.created_at ? Utils.timeAgo(lesson.created_at) : 'Recently'}</span>
+                        <span>${lesson.completed ? '✅ Completed' : '📖 In Progress'}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        container.className = 'space-y-3';
+        container.innerHTML = filtered.map(lesson => `
+            <div class="card hover:shadow-md transition-shadow cursor-pointer" onclick="window.location.href='lesson-view.html?id=${lesson.id}'">
+                <div class="card-body flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-lg bg-${Utils.getSubjectColor(lesson.subject)}-100 flex items-center justify-center text-2xl">
+                        📚
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-semibold truncate">${Utils.escapeHtml(lesson.title || lesson.topic)}</h3>
+                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <span class="capitalize">${lesson.subject}</span>
+                            <span>•</span>
+                            <span class="capitalize">${lesson.difficulty}</span>
+                            <span>•</span>
+                            <span>${lesson.created_at ? Utils.timeAgo(lesson.created_at) : 'Recently'}</span>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        ${lesson.completed ? '<span class="text-green-600">✅ Completed</span>' : '<span class="text-gray-400">📖 In Progress</span>'}
+                    </div>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+</script>
