@@ -1,0 +1,365 @@
+<?php $pageTitle = 'Progress - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Progress & Analytics</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="page-title">Progress & Analytics</h1>
+                <p class="page-subtitle">Track your ACT preparation journey</p>
+            </div>
+
+            <!-- Overview Stats -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-blue-100 text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-lessons">0</div>
+                    <div class="stat-card-label">Lessons Completed</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-green-100 text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-quizzes">0</div>
+                    <div class="stat-card-label">Quizzes Taken</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-purple-100 text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-time">0h</div>
+                    <div class="stat-card-label">Study Time</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-orange-100 text-orange-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-streak">0</div>
+                    <div class="stat-card-label">Day Streak 🔥</div>
+                </div>
+            </div>
+
+            <!-- Projected Score -->
+            <div class="card mb-8 bg-gradient-to-r from-primary-500 to-accent-500 text-white">
+                <div class="card-body">
+                    <div class="grid md:grid-cols-3 gap-6 items-center">
+                        <div class="text-center md:text-left">
+                            <div class="text-sm uppercase tracking-wide opacity-80 mb-1">Projected ACT Score</div>
+                            <div class="text-5xl font-bold" id="projected-score">--</div>
+                            <div class="text-sm opacity-80 mt-1">Based on your performance</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm uppercase tracking-wide opacity-80 mb-1">Percentile</div>
+                            <div class="text-3xl font-bold"><span id="percentile">--</span>th</div>
+                        </div>
+                        <div class="text-center md:text-right">
+                            <div class="text-sm uppercase tracking-wide opacity-80 mb-1">Target Score</div>
+                            <div class="text-3xl font-bold" id="target-score">--</div>
+                            <a href="study-plan.html" class="text-sm underline opacity-80 hover:opacity-100">Update Target →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid lg:grid-cols-2 gap-6 mb-8">
+                <!-- Score Trend -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Score Trend</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="h-64">
+                            <canvas id="score-trend-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subject Performance -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Subject Performance</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="h-64">
+                            <canvas id="subject-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Breakdown -->
+            <div class="card mb-8">
+                <div class="card-header">
+                    <h2 class="font-semibold">Subject Breakdown</h2>
+                </div>
+                <div class="card-body">
+                    <div class="space-y-6">
+                        <!-- English -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">📖</span>
+                                    <div>
+                                        <div class="font-medium">English</div>
+                                        <div class="text-sm text-gray-500"><span id="english-questions">0</span> questions answered</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-blue-600" id="english-score">--%</div>
+                                    <div class="text-sm text-gray-500">Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill bg-blue-500" id="english-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Math -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🔢</span>
+                                    <div>
+                                        <div class="font-medium">Math</div>
+                                        <div class="text-sm text-gray-500"><span id="math-questions">0</span> questions answered</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-green-600" id="math-score">--%</div>
+                                    <div class="text-sm text-gray-500">Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill bg-green-500" id="math-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Reading -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">📚</span>
+                                    <div>
+                                        <div class="font-medium">Reading</div>
+                                        <div class="text-sm text-gray-500"><span id="reading-questions">0</span> questions answered</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-purple-600" id="reading-score">--%</div>
+                                    <div class="text-sm text-gray-500">Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill bg-purple-500" id="reading-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Science -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🔬</span>
+                                    <div>
+                                        <div class="font-medium">Science</div>
+                                        <div class="text-sm text-gray-500"><span id="science-questions">0</span> questions answered</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-orange-600" id="science-score">--%</div>
+                                    <div class="text-sm text-gray-500">Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill bg-orange-500" id="science-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity & Achievements -->
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Study Activity</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="h-48">
+                            <canvas id="activity-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div class="card">
+                    <div class="card-header flex items-center justify-between">
+                        <h2 class="font-semibold">Achievements</h2>
+                        <span class="text-sm text-gray-500"><span id="achievement-count">0</span>/20 Unlocked</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="achievements-grid" class="grid grid-cols-5 gap-4">
+                            <!-- Achievements will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+const ACHIEVEMENTS = [
+    { id: 'first_lesson', emoji: '📚', name: 'First Steps', desc: 'Complete your first lesson' },
+    { id: 'quiz_ace', emoji: '🎯', name: 'Quiz Ace', desc: 'Score 100% on a quiz' },
+    { id: 'week_streak', emoji: '🔥', name: 'Week Warrior', desc: '7-day study streak' },
+    { id: 'month_streak', emoji: '💪', name: 'Dedicated', desc: '30-day study streak' },
+    { id: 'ten_quizzes', emoji: '📝', name: 'Quiz Master', desc: 'Complete 10 quizzes' },
+    { id: 'perfect_math', emoji: '🧮', name: 'Math Genius', desc: '100% on a math quiz' },
+    { id: 'perfect_english', emoji: '✏️', name: 'Grammar Pro', desc: '100% on an English quiz' },
+    { id: 'speed_demon', emoji: '⚡', name: 'Speed Demon', desc: 'Finish a quiz in half time' },
+    { id: 'essay_writer', emoji: '✍️', name: 'Wordsmith', desc: 'Complete an essay' },
+    { id: 'high_score', emoji: '🏆', name: 'High Achiever', desc: 'Score 30+ on practice test' },
+    { id: 'flashcard_master', emoji: '🃏', name: 'Card Shark', desc: 'Master 100 flashcards' },
+    { id: 'all_subjects', emoji: '🌟', name: 'Well Rounded', desc: 'Study all subjects' },
+    { id: 'night_owl', emoji: '🦉', name: 'Night Owl', desc: 'Study after midnight' },
+    { id: 'early_bird', emoji: '🐦', name: 'Early Bird', desc: 'Study before 6 AM' },
+    { id: 'helper', emoji: '🤝', name: 'Knowledge Seeker', desc: 'Ask AI tutor 10 questions' },
+    { id: 'planner', emoji: '📅', name: 'Organized', desc: 'Create a study plan' },
+    { id: 'improver', emoji: '📈', name: 'Rising Star', desc: 'Improve score by 5 points' },
+    { id: 'consistent', emoji: '⭐', name: 'Consistent', desc: 'Study 5 days in a row' },
+    { id: 'explorer', emoji: '🗺️', name: 'Explorer', desc: 'Try all features' },
+    { id: 'champion', emoji: '👑', name: 'Champion', desc: 'Score 36 composite' }
+];
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadProgress();
+});
+
+async function loadProgress() {
+    try {
+        const result = await API.getStatistics();
+        
+        if (result.success && result.data) {
+            const stats = result.data;
+            
+            // Overview stats
+            document.getElementById('stat-lessons').textContent = stats.lessons?.completed || 0;
+            document.getElementById('stat-quizzes').textContent = stats.quizzes?.completed_quizzes || 0;
+            document.getElementById('stat-time').textContent = formatStudyTime(stats.user?.study_time || 0);
+            document.getElementById('stat-streak').textContent = stats.user?.streak || 0;
+            
+            // Projected score
+            const avgScore = stats.quizzes?.average_score || 0;
+            const projectedScore = Math.round(Utils.rawToScaled(avgScore, 100));
+            document.getElementById('projected-score').textContent = projectedScore || '--';
+            document.getElementById('percentile').textContent = Utils.getPercentile(projectedScore);
+            document.getElementById('target-score').textContent = stats.user?.target_score || '--';
+            
+            // Subject breakdown
+            const subjects = ['english', 'math', 'reading', 'science'];
+            subjects.forEach(subject => {
+                const subjectData = stats.subjects?.[subject] || {};
+                const total = subjectData.total_questions || 0;
+                const correct = subjectData.correct || 0;
+                const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+                
+                document.getElementById(`${subject}-questions`).textContent = total;
+                document.getElementById(`${subject}-score`).textContent = accuracy + '%';
+                document.getElementById(`${subject}-bar`).style.width = accuracy + '%';
+            });
+            
+            // Charts
+            renderCharts(stats);
+            
+            // Achievements
+            renderAchievements(stats.user?.achievements || []);
+        }
+    } catch (error) {
+        console.error('Failed to load progress:', error);
+    }
+}
+
+function formatStudyTime(minutes) {
+    if (minutes < 60) return minutes + 'm';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return hours + 'h' + (mins > 0 ? ' ' + mins + 'm' : '');
+}
+
+function renderCharts(stats) {
+    // Score trend
+    const trendLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+    const trendData = stats.score_history || [0, 0, 0, 0];
+    
+    Charts.line('score-trend-chart',
+        trendLabels,
+        [{ 
+            label: 'Score %', 
+            data: trendData, 
+            color: '#3b82f6',
+            fill: true,
+            smooth: true
+        }],
+        { scales: { y: { min: 0, max: 100 } } }
+    );
+    
+    // Subject performance radar
+    const subjectScores = ['english', 'math', 'reading', 'science'].map(s => {
+        const data = stats.subjects?.[s] || {};
+        const total = data.total_questions || 0;
+        const correct = data.correct || 0;
+        return total > 0 ? Math.round((correct / total) * 100) : 0;
+    });
+    
+    Charts.radar('subject-chart',
+        ['English', 'Math', 'Reading', 'Science'],
+        [{ label: 'Performance', data: subjectScores, color: '#8b5cf6' }],
+        { scales: { r: { min: 0, max: 100 } } }
+    );
+    
+    // Activity chart
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const activityData = stats.weekly_activity || [0, 0, 0, 0, 0, 0, 0];
+    
+    Charts.bar('activity-chart',
+        days,
+        [{ label: 'Minutes', data: activityData, color: '#10b981' }]
+    );
+}
+
+function renderAchievements(unlockedIds) {
+    const container = document.getElementById('achievements-grid');
+    
+    container.innerHTML = ACHIEVEMENTS.map(achievement => {
+        const isUnlocked = unlockedIds.includes(achievement.id);
+        return `
+            <div class="text-center ${isUnlocked ? '' : 'opacity-30'}" title="${achievement.name}: ${achievement.desc}">
+                <div class="text-3xl mb-1">${achievement.emoji}</div>
+                <div class="text-xs truncate">${achievement.name}</div>
+            </div>
+        `;
+    }).join('');
+    
+    document.getElementById('achievement-count').textContent = unlockedIds.length;
+}
+</script>

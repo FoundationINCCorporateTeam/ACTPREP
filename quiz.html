@@ -1,0 +1,614 @@
+<?php $pageTitle = 'Quiz - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Quiz</span>
+            </nav>
+
+            <!-- Quiz Setup -->
+            <div id="quiz-setup">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                    <div>
+                        <h1 class="page-title">Practice Quiz</h1>
+                        <p class="page-subtitle">Generate a customized quiz to test your knowledge</p>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Quiz Configuration -->
+                    <div class="lg:col-span-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="text-lg font-semibold">Quiz Settings</h2>
+                            </div>
+                            <div class="card-body">
+                                <form id="quiz-form" class="space-y-6">
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="subject">Subject</label>
+                                            <select id="subject" name="subject" class="form-input form-select" required>
+                                                <option value="english">English</option>
+                                                <option value="math" selected>Math</option>
+                                                <option value="reading">Reading</option>
+                                                <option value="science">Science</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="difficulty">Difficulty</label>
+                                            <select id="difficulty" name="difficulty" class="form-input form-select">
+                                                <option value="beginner">Beginner</option>
+                                                <option value="intermediate" selected>Intermediate</option>
+                                                <option value="advanced">Advanced</option>
+                                                <option value="mixed">Mixed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="topic">Topic (optional)</label>
+                                        <input type="text" id="topic" name="topic" class="form-input" placeholder="Leave blank for general quiz or specify a topic..." list="topic-suggestions">
+                                        <datalist id="topic-suggestions"></datalist>
+                                        <p class="form-hint">Specific topic or leave blank for a general subject quiz</p>
+                                    </div>
+
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="num-questions">Number of Questions</label>
+                                            <select id="num-questions" name="num_questions" class="form-input form-select">
+                                                <option value="5">5 Questions (~5 min)</option>
+                                                <option value="10" selected>10 Questions (~10 min)</option>
+                                                <option value="15">15 Questions (~15 min)</option>
+                                                <option value="20">20 Questions (~20 min)</option>
+                                                <option value="25">25 Questions (~25 min)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="time-limit">Time Limit</label>
+                                            <select id="time-limit" name="time_limit" class="form-input form-select">
+                                                <option value="0">No Time Limit</option>
+                                                <option value="300">5 Minutes</option>
+                                                <option value="600" selected>10 Minutes</option>
+                                                <option value="900">15 Minutes</option>
+                                                <option value="1200">20 Minutes</option>
+                                                <option value="1800">30 Minutes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Question Types</label>
+                                        <div class="flex flex-wrap gap-3">
+                                            <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                                <input type="checkbox" name="types[]" value="multiple_choice" checked class="form-checkbox">
+                                                <span class="text-sm">Multiple Choice</span>
+                                            </label>
+                                            <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                                <input type="checkbox" name="types[]" value="true_false" class="form-checkbox">
+                                                <span class="text-sm">True/False</span>
+                                            </label>
+                                            <label class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                                <input type="checkbox" name="types[]" value="fill_blank" class="form-checkbox">
+                                                <span class="text-sm">Fill in the Blank</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="model">AI Model</label>
+                                        <select id="model" name="model" class="form-input form-select">
+                                            <option value="deepseek-v3.2">DeepSeek V3.2 (Recommended)</option>
+                                            <option value="glm-4.7">GLM 4.7 Thinking</option>
+                                            <option value="llama-3.1">Llama 3.1 Large</option>
+                                            <option value="minimax-m2.1">MiniMax M2.1</option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-lg w-full">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                        Generate Quiz
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Quizzes -->
+                    <div class="space-y-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="font-semibold">Recent Quizzes</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="recent-quizzes" class="divide-y divide-gray-200 dark:divide-gray-700 max-h-96 overflow-y-auto">
+                                    <p class="p-4 text-sm text-gray-500 text-center">No recent quizzes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                            <div class="card-body text-center">
+                                <div class="text-4xl mb-2">🎯</div>
+                                <h3 class="font-semibold mb-2">Quiz Stats</h3>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <div class="text-2xl font-bold" id="total-quizzes">0</div>
+                                        <div class="opacity-80">Completed</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold" id="avg-score">--%</div>
+                                        <div class="opacity-80">Avg Score</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generation Progress -->
+            <div id="quiz-generating" class="hidden">
+                <div class="card max-w-xl mx-auto">
+                    <div class="card-body text-center py-12">
+                        <div class="loading-spinner mx-auto mb-4"></div>
+                        <h3 class="text-lg font-semibold mb-2">Generating Your Quiz...</h3>
+                        <p class="text-gray-500 mb-4" id="generation-status">Preparing questions...</p>
+                        <div class="max-w-md mx-auto">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="generation-progress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-sm text-gray-400 mt-2"><span id="generation-percent">0</span>%</p>
+                        </div>
+                        <button id="cancel-generation" class="btn btn-ghost mt-4">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Taking Interface -->
+            <div id="quiz-taking" class="hidden">
+                <!-- Quiz Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h1 class="page-title" id="quiz-title">Quiz</h1>
+                        <p class="text-gray-500"><span id="quiz-subject-badge" class="badge badge-primary"></span></p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div id="timer-display" class="text-2xl font-mono font-bold text-primary-600 hidden">
+                            <span id="timer">00:00</span>
+                        </div>
+                        <button id="submit-quiz" class="btn btn-success">
+                            Submit Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress -->
+                <div class="card mb-6">
+                    <div class="card-body py-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium">Progress: <span id="answered-count">0</span>/<span id="total-questions">0</span></span>
+                            <span class="text-sm text-gray-500" id="quiz-progress-text">0% complete</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quiz-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questions -->
+                <div id="questions-container" class="space-y-6">
+                    <!-- Questions will be rendered here -->
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex justify-between mt-8">
+                    <button id="prev-question" class="btn btn-secondary" disabled>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Previous
+                    </button>
+                    <div id="question-nav" class="hidden md:flex gap-2 flex-wrap justify-center">
+                        <!-- Question number buttons -->
+                    </div>
+                    <button id="next-question" class="btn btn-primary">
+                        Next
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+const topicSuggestions = {
+    english: ['Grammar Rules', 'Punctuation', 'Sentence Structure', 'Subject-Verb Agreement', 'Verb Tense', 'Rhetorical Skills'],
+    math: ['Algebra', 'Geometry', 'Trigonometry', 'Statistics', 'Functions', 'Word Problems'],
+    reading: ['Main Idea', 'Inference', 'Vocabulary in Context', 'Author\'s Purpose', 'Text Structure'],
+    science: ['Data Interpretation', 'Scientific Investigation', 'Experimental Design', 'Graph Analysis']
+};
+
+let quiz = null;
+let currentQuestion = 0;
+let answers = {};
+let timer = null;
+let timeRemaining = 0;
+let startTime = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check for URL params
+    const params = Utils.getQueryParams();
+    if (params.subject) {
+        document.getElementById('subject').value = params.subject;
+    }
+    if (params.topic) {
+        document.getElementById('topic').value = params.topic;
+    }
+    
+    setupEventListeners();
+    loadRecentQuizzes();
+    loadQuizStats();
+    updateTopicSuggestions();
+});
+
+function setupEventListeners() {
+    // Subject change
+    document.getElementById('subject').addEventListener('change', updateTopicSuggestions);
+    
+    // Form submission
+    document.getElementById('quiz-form').addEventListener('submit', handleGenerateQuiz);
+    
+    // Cancel generation
+    document.getElementById('cancel-generation').addEventListener('click', () => {
+        document.getElementById('quiz-generating').classList.add('hidden');
+        document.getElementById('quiz-setup').classList.remove('hidden');
+    });
+    
+    // Navigation
+    document.getElementById('prev-question').addEventListener('click', () => navigateQuestion(-1));
+    document.getElementById('next-question').addEventListener('click', () => navigateQuestion(1));
+    
+    // Submit quiz
+    document.getElementById('submit-quiz').addEventListener('click', submitQuiz);
+}
+
+function updateTopicSuggestions() {
+    const subject = document.getElementById('subject').value;
+    const datalist = document.getElementById('topic-suggestions');
+    const suggestions = topicSuggestions[subject] || [];
+    datalist.innerHTML = suggestions.map(s => `<option value="${s}">`).join('');
+}
+
+async function loadRecentQuizzes() {
+    try {
+        const result = await API.getQuizzes();
+        const container = document.getElementById('recent-quizzes');
+        
+        if (result.success && result.data && result.data.length > 0) {
+            container.innerHTML = result.data.slice(0, 5).map(q => `
+                <a href="quiz-results.html?id=${q.id}" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-sm">${Utils.escapeHtml(q.title || q.topic || 'Quiz')}</div>
+                            <div class="text-xs text-gray-500">${Utils.capitalize(q.subject)} • ${q.questions?.length || 0} questions</div>
+                        </div>
+                        ${q.score !== undefined ? `<span class="badge ${q.score >= 70 ? 'badge-success' : 'badge-warning'}">${q.score}%</span>` : ''}
+                    </div>
+                </a>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Failed to load recent quizzes:', error);
+    }
+}
+
+async function loadQuizStats() {
+    try {
+        const result = await API.getStatistics();
+        if (result.success && result.data) {
+            document.getElementById('total-quizzes').textContent = result.data.quizzes?.completed_quizzes || 0;
+            document.getElementById('avg-score').textContent = (result.data.quizzes?.average_score || 0) + '%';
+        }
+    } catch (error) {
+        console.error('Failed to load quiz stats:', error);
+    }
+}
+
+async function handleGenerateQuiz(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const types = Array.from(formData.getAll('types[]'));
+    
+    if (types.length === 0) {
+        Notifications.error('Error', 'Please select at least one question type');
+        return;
+    }
+    
+    const params = {
+        subject: formData.get('subject'),
+        topic: formData.get('topic') || null,
+        difficulty: formData.get('difficulty'),
+        num_questions: parseInt(formData.get('num_questions')),
+        time_limit: parseInt(formData.get('time_limit')),
+        question_types: types,
+        model: formData.get('model')
+    };
+    
+    // Show generating UI
+    document.getElementById('quiz-setup').classList.add('hidden');
+    document.getElementById('quiz-generating').classList.remove('hidden');
+    
+    try {
+        const result = await Poll.generateQuiz(params, {
+            onProgress: (progress) => {
+                document.getElementById('generation-progress').style.width = progress.progress + '%';
+                document.getElementById('generation-percent').textContent = Math.round(progress.progress);
+                
+                if (progress.progress < 30) {
+                    document.getElementById('generation-status').textContent = 'Preparing questions...';
+                } else if (progress.progress < 60) {
+                    document.getElementById('generation-status').textContent = 'Generating content...';
+                } else if (progress.progress < 90) {
+                    document.getElementById('generation-status').textContent = 'Adding answer choices...';
+                } else {
+                    document.getElementById('generation-status').textContent = 'Finalizing quiz...';
+                }
+            }
+        });
+        
+        // Save and start quiz
+        quiz = {
+            ...params,
+            questions: result.questions || result,
+            title: params.topic || `${Utils.capitalize(params.subject)} Quiz`,
+            created_at: Math.floor(Date.now() / 1000)
+        };
+        
+        const saveResult = await API.saveQuiz(quiz);
+        if (saveResult.success && saveResult.data) {
+            quiz.id = saveResult.data.id;
+        }
+        
+        startQuiz();
+        
+    } catch (error) {
+        Notifications.error('Generation Failed', error.message);
+        document.getElementById('quiz-generating').classList.add('hidden');
+        document.getElementById('quiz-setup').classList.remove('hidden');
+    }
+}
+
+function startQuiz() {
+    document.getElementById('quiz-generating').classList.add('hidden');
+    document.getElementById('quiz-taking').classList.remove('hidden');
+    
+    // Set quiz info
+    document.getElementById('quiz-title').textContent = quiz.title;
+    document.getElementById('quiz-subject-badge').textContent = Utils.capitalize(quiz.subject);
+    document.getElementById('quiz-subject-badge').className = `badge badge-${quiz.subject}`;
+    document.getElementById('total-questions').textContent = quiz.questions.length;
+    
+    // Setup timer if needed
+    if (quiz.time_limit > 0) {
+        timeRemaining = quiz.time_limit;
+        document.getElementById('timer-display').classList.remove('hidden');
+        updateTimer();
+        timer = setInterval(() => {
+            timeRemaining--;
+            updateTimer();
+            if (timeRemaining <= 0) {
+                clearInterval(timer);
+                submitQuiz();
+            }
+        }, 1000);
+    }
+    
+    startTime = Date.now();
+    currentQuestion = 0;
+    answers = {};
+    
+    // Render questions
+    renderQuestions();
+    renderQuestionNav();
+    showQuestion(0);
+}
+
+function renderQuestions() {
+    const container = document.getElementById('questions-container');
+    container.innerHTML = quiz.questions.map((q, index) => `
+        <div class="card question-card ${index === 0 ? '' : 'hidden'}" data-question="${index}">
+            <div class="card-body">
+                <div class="flex items-start justify-between mb-4">
+                    <span class="badge badge-gray">Question ${index + 1} of ${quiz.questions.length}</span>
+                    ${q.difficulty ? `<span class="badge badge-${Utils.getDifficultyColor(q.difficulty)}">${Utils.capitalize(q.difficulty)}</span>` : ''}
+                </div>
+                <div class="text-lg font-medium mb-6 question-text">${Utils.escapeHtml(q.question)}</div>
+                <div class="space-y-3 options-container">
+                    ${renderOptions(q, index)}
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Render math in questions
+    container.querySelectorAll('.question-text').forEach(el => {
+        MathRenderer.renderElement(el);
+    });
+    
+    // Add click handlers
+    container.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectAnswer(btn));
+    });
+}
+
+function renderOptions(question, qIndex) {
+    if (question.type === 'true_false') {
+        return `
+            <button class="option-btn w-full text-left p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-500 transition-colors" data-question="${qIndex}" data-answer="true">
+                <span class="font-medium">True</span>
+            </button>
+            <button class="option-btn w-full text-left p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-500 transition-colors" data-question="${qIndex}" data-answer="false">
+                <span class="font-medium">False</span>
+            </button>
+        `;
+    } else if (question.type === 'fill_blank') {
+        return `
+            <div class="form-group">
+                <input type="text" class="form-input fill-blank-input" data-question="${qIndex}" placeholder="Type your answer...">
+            </div>
+        `;
+    } else {
+        // Multiple choice
+        const options = question.options || question.choices || [];
+        return options.map((opt, i) => `
+            <button class="option-btn w-full text-left p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-500 transition-colors" data-question="${qIndex}" data-answer="${i}">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 mr-3 font-medium">${String.fromCharCode(65 + i)}</span>
+                <span class="option-text">${Utils.escapeHtml(opt)}</span>
+            </button>
+        `).join('');
+    }
+}
+
+function renderQuestionNav() {
+    const nav = document.getElementById('question-nav');
+    nav.innerHTML = quiz.questions.map((_, i) => `
+        <button class="w-8 h-8 rounded-lg text-sm font-medium ${i === 0 ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-700'} hover:bg-primary-400 hover:text-white transition-colors question-nav-btn" data-index="${i}">
+            ${i + 1}
+        </button>
+    `).join('');
+    
+    nav.querySelectorAll('.question-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => showQuestion(parseInt(btn.dataset.index)));
+    });
+}
+
+function showQuestion(index) {
+    currentQuestion = index;
+    
+    // Hide all questions
+    document.querySelectorAll('.question-card').forEach(card => {
+        card.classList.add('hidden');
+    });
+    
+    // Show current question
+    document.querySelector(`.question-card[data-question="${index}"]`).classList.remove('hidden');
+    
+    // Update navigation
+    document.getElementById('prev-question').disabled = index === 0;
+    document.getElementById('next-question').disabled = index === quiz.questions.length - 1;
+    
+    // Update nav buttons
+    document.querySelectorAll('.question-nav-btn').forEach((btn, i) => {
+        btn.classList.remove('bg-primary-500', 'text-white');
+        if (i === index) {
+            btn.classList.add('bg-primary-500', 'text-white');
+        } else if (answers[i] !== undefined) {
+            btn.classList.add('bg-green-500', 'text-white');
+        } else {
+            btn.classList.add('bg-gray-100', 'dark:bg-gray-700');
+        }
+    });
+}
+
+function navigateQuestion(direction) {
+    const newIndex = currentQuestion + direction;
+    if (newIndex >= 0 && newIndex < quiz.questions.length) {
+        showQuestion(newIndex);
+    }
+}
+
+function selectAnswer(btn) {
+    const qIndex = parseInt(btn.dataset.question);
+    const answer = btn.dataset.answer;
+    
+    // Store answer
+    answers[qIndex] = answer;
+    
+    // Update UI
+    const container = btn.parentElement;
+    container.querySelectorAll('.option-btn').forEach(b => {
+        b.classList.remove('border-primary-500', 'bg-primary-50', 'dark:bg-primary-900/20');
+    });
+    btn.classList.add('border-primary-500', 'bg-primary-50', 'dark:bg-primary-900/20');
+    
+    // Update progress
+    updateProgress();
+    
+    // Auto-advance after short delay
+    setTimeout(() => {
+        if (currentQuestion < quiz.questions.length - 1) {
+            navigateQuestion(1);
+        }
+    }, 300);
+}
+
+function updateProgress() {
+    const answered = Object.keys(answers).length;
+    const total = quiz.questions.length;
+    const percent = Math.round((answered / total) * 100);
+    
+    document.getElementById('answered-count').textContent = answered;
+    document.getElementById('quiz-progress-bar').style.width = percent + '%';
+    document.getElementById('quiz-progress-text').textContent = percent + '% complete';
+}
+
+function updateTimer() {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    document.getElementById('timer').textContent = 
+        mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+    
+    if (timeRemaining <= 60) {
+        document.getElementById('timer-display').classList.add('text-red-600');
+    }
+}
+
+async function submitQuiz() {
+    if (timer) {
+        clearInterval(timer);
+    }
+    
+    // Get fill-in-blank answers
+    document.querySelectorAll('.fill-blank-input').forEach(input => {
+        const qIndex = parseInt(input.dataset.question);
+        if (input.value.trim()) {
+            answers[qIndex] = input.value.trim();
+        }
+    });
+    
+    const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+    
+    // Confirm if not all answered
+    const unanswered = quiz.questions.length - Object.keys(answers).length;
+    if (unanswered > 0) {
+        if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+            return;
+        }
+    }
+    
+    UI.showLoading('Grading your quiz...');
+    
+    try {
+        const result = await API.gradeQuiz(quiz.id, answers, timeTaken);
+        
+        if (result.success) {
+            window.location.href = `quiz-results.html?id=${quiz.id}`;
+        } else {
+            throw new Error(result.message || 'Failed to grade quiz');
+        }
+    } catch (error) {
+        UI.hideLoading();
+        Notifications.error('Error', error.message);
+    }
+}
+</script>

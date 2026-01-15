@@ -1,0 +1,1073 @@
+/**
+ * ACT Test Prep - Page-Specific Styles
+ */
+
+/* ==================== Login/Landing Page ==================== */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+}
+
+.login-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 2rem;
+}
+
+.dark .login-card {
+    background: #1f2937;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-logo-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    background: #f3f4f6;
+    padding: 0.25rem;
+}
+
+.dark .login-tabs {
+    background: #374151;
+}
+
+.login-tab {
+    flex: 1;
+    padding: 0.625rem 1rem;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.login-tab.active {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .login-tab.active {
+    background: #1f2937;
+}
+
+/* ==================== Dashboard ==================== */
+
+.dashboard-welcome {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-welcome h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-welcome p {
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.dashboard-stat {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 0.75rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    min-width: 100px;
+}
+
+.dashboard-stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.dashboard-stat-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.quick-action-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.dark .quick-action-card {
+    background: #1f2937;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quick-action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* ==================== Lessons Page ==================== */
+
+.lesson-generator {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .lesson-generator {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.lesson-card {
+    position: relative;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 150ms ease;
+}
+
+.dark .lesson-card {
+    background: #1f2937;
+}
+
+.lesson-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.lesson-card-subject {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.lesson-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    padding-right: 4rem;
+}
+
+.lesson-card-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+}
+
+.lesson-card-excerpt {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+/* ==================== Lesson View ==================== */
+
+.lesson-view {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .lesson-view {
+        grid-template-columns: 250px 1fr;
+    }
+}
+
+.lesson-toc {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    position: sticky;
+    top: 5rem;
+    height: fit-content;
+}
+
+.dark .lesson-toc {
+    background: #1f2937;
+}
+
+.lesson-toc-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .lesson-toc-title {
+    border-color: #374151;
+}
+
+.lesson-toc-list {
+    list-style: none;
+}
+
+.lesson-toc-item {
+    padding: 0.375rem 0;
+}
+
+.lesson-toc-link {
+    font-size: 0.875rem;
+    color: #6b7280;
+    transition: color 150ms ease;
+}
+
+.lesson-toc-link:hover,
+.lesson-toc-link.active {
+    color: #3b82f6;
+}
+
+.lesson-toc-item.level-2 { padding-left: 1rem; }
+.lesson-toc-item.level-3 { padding-left: 2rem; }
+
+.lesson-content {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    line-height: 1.8;
+}
+
+.dark .lesson-content {
+    background: #1f2937;
+}
+
+.lesson-content h1 { font-size: 1.75rem; margin-top: 2rem; }
+.lesson-content h2 { font-size: 1.5rem; margin-top: 1.75rem; }
+.lesson-content h3 { font-size: 1.25rem; margin-top: 1.5rem; }
+
+.lesson-content p {
+    margin-bottom: 1rem;
+}
+
+.lesson-content ul,
+.lesson-content ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.lesson-content li {
+    margin-bottom: 0.5rem;
+}
+
+.lesson-content blockquote {
+    border-left: 4px solid #3b82f6;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #6b7280;
+}
+
+.lesson-content pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.lesson-content code {
+    background: #f1f5f9;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+.dark .lesson-content code {
+    background: #374151;
+}
+
+.lesson-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+/* ==================== Quiz Interface ==================== */
+
+.quiz-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dark .quiz-header {
+    background: #1f2937;
+}
+
+.quiz-progress {
+    flex: 1;
+    margin: 0 2rem;
+}
+
+.quiz-timer {
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+.quiz-timer.warning {
+    color: #f59e0b;
+}
+
+.quiz-timer.danger {
+    color: #ef4444;
+    animation: pulse 1s infinite;
+}
+
+.quiz-question-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.dark .quiz-question-card {
+    background: #1f2937;
+}
+
+.quiz-question-number {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.quiz-question-text {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.quiz-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: #f9fafb;
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.dark .quiz-option {
+    background: #374151;
+}
+
+.quiz-option:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.dark .quiz-option:hover {
+    background: #4b5563;
+}
+
+.quiz-option.selected {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.dark .quiz-option.selected {
+    border-color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+}
+
+.quiz-option.correct {
+    border-color: #10b981;
+    background: #d1fae5;
+}
+
+.quiz-option.incorrect {
+    border-color: #ef4444;
+    background: #fee2e2;
+}
+
+.quiz-option.eliminated {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
+.quiz-option-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.dark .quiz-option-letter {
+    background: #4b5563;
+}
+
+.quiz-option.selected .quiz-option-letter {
+    background: #3b82f6;
+    color: white;
+}
+
+.quiz-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.75rem;
+}
+
+.dark .quiz-navigation {
+    background: #1f2937;
+}
+
+.quiz-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 0.5rem;
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 150ms ease;
+}
+
+.dark .quiz-nav-btn {
+    background: #374151;
+    color: #d1d5db;
+}
+
+.quiz-nav-btn.current {
+    background: #3b82f6;
+    color: white;
+}
+
+.quiz-nav-btn.answered {
+    background: #10b981;
+    color: white;
+}
+
+.quiz-nav-btn.flagged {
+    background: #f59e0b;
+    color: white;
+}
+
+/* ==================== Chat Interface ==================== */
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 140px);
+    background: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.dark .chat-container {
+    background: #1f2937;
+}
+
+.chat-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dark .chat-header {
+    border-color: #374151;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    line-height: 1.6;
+}
+
+.chat-message-user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.chat-message-ai {
+    align-self: flex-start;
+    background: #f3f4f6;
+    color: #1f2937;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.dark .chat-message-ai {
+    background: #374151;
+    color: #f3f4f6;
+}
+
+.chat-message-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}
+
+.chat-typing {
+    display: flex;
+    gap: 4px;
+    padding: 1rem;
+    align-self: flex-start;
+}
+
+.chat-typing span {
+    width: 8px;
+    height: 8px;
+    background: #6b7280;
+    border-radius: 50%;
+    animation: typing-bounce 1.4s ease-in-out infinite;
+}
+
+.chat-typing span:nth-child(1) { animation-delay: 0s; }
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+}
+
+.chat-input-area {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.dark .chat-input-area {
+    border-color: #374151;
+    background: #111827;
+}
+
+.chat-input-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 1.5rem;
+    resize: none;
+    max-height: 120px;
+    font-size: 0.9375rem;
+}
+
+.dark .chat-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+.chat-send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 150ms ease;
+}
+
+.chat-send-btn:hover {
+    transform: scale(1.05);
+}
+
+.chat-send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ==================== Flashcards ==================== */
+
+.flashcard-deck {
+    perspective: 1000px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.flashcard {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+.dark .flashcard-front,
+.dark .flashcard-back {
+    background: #1f2937;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+}
+
+.flashcard-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.flashcard-counter {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 1rem;
+}
+
+/* ==================== Progress Page ==================== */
+
+.progress-chart-container {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dark .progress-chart-container {
+    background: #1f2937;
+}
+
+.progress-chart {
+    height: 300px;
+}
+
+.progress-subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.progress-subject-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.dark .progress-subject-card {
+    background: #1f2937;
+}
+
+.progress-subject-score {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.progress-subject-name {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+}
+
+.progress-subject-bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.dark .progress-subject-bar {
+    background: #374151;
+}
+
+/* ==================== Essay Writing ==================== */
+
+.essay-container {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .essay-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.essay-prompt {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.dark .essay-prompt {
+    background: #1f2937;
+}
+
+.essay-prompt-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.essay-perspectives {
+    margin-top: 1.5rem;
+}
+
+.essay-perspective {
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.dark .essay-perspective {
+    background: #374151;
+}
+
+.essay-perspective-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #3b82f6;
+}
+
+.essay-editor {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.dark .essay-editor {
+    background: #1f2937;
+}
+
+.essay-textarea {
+    width: 100%;
+    min-height: 400px;
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    resize: vertical;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.dark .essay-textarea {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+.essay-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* ==================== Study Plan ==================== */
+
+.study-plan-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.study-plan-day {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    min-height: 100px;
+}
+
+.dark .study-plan-day {
+    background: #1f2937;
+}
+
+.study-plan-day-header {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.study-plan-task {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+}
+
+.study-plan-task.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* ==================== Settings Page ==================== */
+
+.settings-section {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dark .settings-section {
+    background: #1f2937;
+}
+
+.settings-section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .settings-section-title {
+    border-color: #374151;
+}
+
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.dark .settings-row {
+    border-color: #374151;
+}
+
+.settings-row:last-child {
+    border-bottom: none;
+}
+
+.settings-label {
+    font-weight: 500;
+}
+
+.settings-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+/* ==================== Profile Page ==================== */
+
+.profile-header {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.profile-info h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.profile-info p {
+    opacity: 0.9;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.profile-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.profile-stat-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.achievement-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    transition: all 150ms ease;
+}
+
+.dark .achievement-card {
+    background: #1f2937;
+}
+
+.achievement-card.locked {
+    opacity: 0.5;
+}
+
+.achievement-card:not(.locked):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.achievement-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.achievement-description {
+    font-size: 0.75rem;
+    color: #6b7280;
+}

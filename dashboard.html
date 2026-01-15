@@ -1,0 +1,334 @@
+<?php $pageTitle = 'Dashboard - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="page-title" id="greeting">Good morning!</h1>
+                <p class="page-subtitle">Ready to continue your ACT preparation?</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-blue-100 text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-lessons">0</div>
+                    <div class="stat-card-label">Lessons Completed</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-green-100 text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-quizzes">0</div>
+                    <div class="stat-card-label">Quizzes Taken</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-purple-100 text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-avg-score">--</div>
+                    <div class="stat-card-label">Avg Quiz Score</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-orange-100 text-orange-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-value" id="stat-streak">0</div>
+                    <div class="stat-card-label">Day Streak 🔥</div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Left Column - Quick Actions -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Quick Actions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-lg font-semibold">Quick Actions</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <a href="lessons.html" class="flex flex-col items-center p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all group">
+                                    <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">New Lesson</span>
+                                </a>
+                                
+                                <a href="quiz.html" class="flex flex-col items-center p-4 rounded-xl bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 transition-all group">
+                                    <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">Take Quiz</span>
+                                </a>
+                                
+                                <a href="practice-test.html" class="flex flex-col items-center p-4 rounded-xl bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all group">
+                                    <div class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">Practice Test</span>
+                                </a>
+                                
+                                <a href="chat.html" class="flex flex-col items-center p-4 rounded-xl bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-all group">
+                                    <div class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">AI Tutor</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subject Performance -->
+                    <div class="card">
+                        <div class="card-header flex items-center justify-between">
+                            <h2 class="text-lg font-semibold">Subject Performance</h2>
+                            <a href="progress.html" class="text-sm text-primary-600 hover:text-primary-700">View Details →</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="h-64">
+                                <canvas id="subject-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-lg font-semibold">Recent Activity</h2>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="recent-activity" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <div class="p-6 text-center text-gray-500">
+                                    <p>No recent activity. Start studying to see your progress!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <!-- Score Trend -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-lg font-semibold">Score Trend</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="h-40">
+                                <canvas id="score-trend-chart"></canvas>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <div class="text-3xl font-bold text-primary-600" id="projected-score">--</div>
+                                <div class="text-sm text-gray-500">Projected ACT Score</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Goals -->
+                    <div class="card">
+                        <div class="card-header flex items-center justify-between">
+                            <h2 class="text-lg font-semibold">Today's Goals</h2>
+                            <a href="study-plan.html" class="text-sm text-primary-600 hover:text-primary-700">View Plan →</a>
+                        </div>
+                        <div class="card-body">
+                            <div id="todays-goals" class="space-y-3">
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+                                    <input type="checkbox" class="form-checkbox">
+                                    <span class="text-sm">Complete 1 lesson</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+                                    <input type="checkbox" class="form-checkbox">
+                                    <span class="text-sm">Take a practice quiz</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+                                    <input type="checkbox" class="form-checkbox">
+                                    <span class="text-sm">Review 10 flashcards</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="card">
+                        <div class="card-header flex items-center justify-between">
+                            <h2 class="text-lg font-semibold">Recent Achievements</h2>
+                            <a href="profile.html" class="text-sm text-primary-600 hover:text-primary-700">View All →</a>
+                        </div>
+                        <div class="card-body">
+                            <div id="achievements" class="grid grid-cols-3 gap-4">
+                                <div class="text-center opacity-30">
+                                    <div class="text-3xl mb-1">📚</div>
+                                    <div class="text-xs text-gray-500">First Steps</div>
+                                </div>
+                                <div class="text-center opacity-30">
+                                    <div class="text-3xl mb-1">🎯</div>
+                                    <div class="text-xs text-gray-500">Quiz Ace</div>
+                                </div>
+                                <div class="text-center opacity-30">
+                                    <div class="text-3xl mb-1">🔥</div>
+                                    <div class="text-xs text-gray-500">Week Warrior</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Study Tip -->
+                    <div class="card bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                        <div class="card-body">
+                            <div class="text-lg mb-1">💡 Study Tip</div>
+                            <p class="text-sm opacity-90" id="study-tip">
+                                Focus on your weakest subjects first. Consistent practice in challenging areas leads to the biggest score improvements!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    // Set greeting
+    document.getElementById('greeting').textContent = Utils.getGreeting() + ', ' + (Auth.getUserName() || 'Student') + '!';
+    
+    // Load statistics
+    try {
+        const statsResult = await API.getStatistics();
+        if (statsResult.success && statsResult.data) {
+            const stats = statsResult.data;
+            
+            // Update stat cards
+            document.getElementById('stat-lessons').textContent = stats.lessons?.completed || 0;
+            document.getElementById('stat-quizzes').textContent = stats.quizzes?.completed_quizzes || 0;
+            document.getElementById('stat-avg-score').textContent = stats.quizzes?.average_score ? stats.quizzes.average_score + '%' : '--';
+            document.getElementById('stat-streak').textContent = stats.user?.streak || 0;
+            
+            // Update sidebar
+            document.getElementById('sidebar-streak').textContent = stats.user?.streak || 0;
+            document.getElementById('sidebar-xp').textContent = stats.user?.xp || 0;
+            document.getElementById('sidebar-level').textContent = stats.user?.level || 1;
+            document.getElementById('sidebar-quizzes').textContent = stats.quizzes?.completed_quizzes || 0;
+            
+            // Create subject performance chart
+            if (stats.subjects) {
+                const subjects = ['english', 'math', 'reading', 'science'];
+                const scores = subjects.map(s => {
+                    const subj = stats.subjects[s];
+                    if (subj && subj.total_questions > 0) {
+                        return Math.round((subj.correct / subj.total_questions) * 100);
+                    }
+                    return 0;
+                });
+                
+                Charts.bar('subject-chart', 
+                    ['English', 'Math', 'Reading', 'Science'],
+                    [{ label: 'Performance %', data: scores, colors: ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b'] }],
+                    { scales: { y: { max: 100 } } }
+                );
+            }
+            
+            // Update achievements
+            if (stats.user?.achievements) {
+                const achievementEls = document.querySelectorAll('#achievements > div');
+                const achievementMap = {
+                    'first_lesson': 0,
+                    'quiz_ace': 1,
+                    'week_streak': 2
+                };
+                
+                stats.user.achievements.forEach(id => {
+                    if (achievementMap[id] !== undefined) {
+                        achievementEls[achievementMap[id]]?.classList.remove('opacity-30');
+                    }
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load statistics:', error);
+    }
+    
+    // Create placeholder score trend chart
+    Charts.line('score-trend-chart', 
+        ['', '', '', '', ''],
+        [{ label: 'Score', data: [0, 0, 0, 0, 0], color: '#3b82f6', fill: true, smooth: true }],
+        { plugins: { legend: { display: false } } }
+    );
+    
+    // Load recent activity
+    try {
+        const lessonsResult = await API.getLessons();
+        const quizzesResult = await API.getQuizzes();
+        
+        const activities = [];
+        
+        if (lessonsResult.success && lessonsResult.data) {
+            lessonsResult.data.slice(0, 3).forEach(lesson => {
+                activities.push({
+                    type: 'lesson',
+                    title: lesson.title,
+                    subject: lesson.subject,
+                    time: lesson.created_at
+                });
+            });
+        }
+        
+        if (quizzesResult.success && quizzesResult.data) {
+            quizzesResult.data.slice(0, 3).forEach(quiz => {
+                activities.push({
+                    type: 'quiz',
+                    title: quiz.title,
+                    subject: quiz.subject,
+                    score: quiz.score,
+                    time: quiz.created_at
+                });
+            });
+        }
+        
+        // Sort by time and display
+        activities.sort((a, b) => (b.time || 0) - (a.time || 0));
+        
+        if (activities.length > 0) {
+            const container = document.getElementById('recent-activity');
+            container.innerHTML = activities.slice(0, 5).map(activity => `
+                <div class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center ${activity.type === 'lesson' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}">
+                        ${activity.type === 'lesson' ? '📖' : '✅'}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-medium truncate">${Utils.escapeHtml(activity.title || 'Untitled')}</div>
+                        <div class="text-sm text-gray-500 capitalize">${activity.subject || 'General'} ${activity.type}</div>
+                    </div>
+                    ${activity.score !== undefined ? `<div class="text-sm font-medium">${activity.score}%</div>` : ''}
+                    <div class="text-sm text-gray-400">${activity.time ? Utils.timeAgo(activity.time) : ''}</div>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Failed to load recent activity:', error);
+    }
+});
+</script>

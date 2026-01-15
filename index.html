@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ACT Test Prep - AI-Powered ACT Preparation Platform">
+    <title>ACT Test Prep - Login</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                            800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        accent: {
+                            50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe',
+                            400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7c3aed',
+                            800: '#6b21a8', 900: '#581c87',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body class="bg-gradient-to-br from-primary-500 via-accent-500 to-primary-700 min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+    
+    <!-- Main Content -->
+    <div class="w-full max-w-5xl flex flex-col lg:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+        
+        <!-- Left Side - Branding -->
+        <div class="lg:w-1/2 bg-gradient-to-br from-primary-600 to-accent-600 p-8 lg:p-12 text-white flex flex-col justify-center">
+            <div class="max-w-md mx-auto">
+                <div class="text-5xl mb-4">📚</div>
+                <h1 class="text-4xl font-bold mb-4">ACT Test Prep</h1>
+                <p class="text-lg opacity-90 mb-8">Your AI-powered companion for ACT success. Practice smarter, score higher.</p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <span>AI-Powered Tutoring</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            </svg>
+                        </div>
+                        <span>Realistic Practice Tests</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <span>Personalized Progress Tracking</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <span>Custom Study Plans</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Side - Auth Forms -->
+        <div class="lg:w-1/2 p-8 lg:p-12">
+            <div class="max-w-md mx-auto">
+                <!-- Tab Buttons -->
+                <div class="flex mb-8 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                    <button class="flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all auth-tab active" data-tab="login">
+                        Sign In
+                    </button>
+                    <button class="flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all auth-tab" data-tab="register">
+                        Sign Up
+                    </button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome Back!</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Enter your credentials to continue</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">Email Address</label>
+                        <input type="email" id="login-email" name="email" class="form-input" placeholder="you@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">Password</label>
+                        <div class="relative">
+                            <input type="password" id="login-password" name="password" class="form-input pr-10" placeholder="••••••••" required>
+                            <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 toggle-password">
+                                <svg class="w-5 h-5 eye-open" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                <svg class="w-5 h-5 eye-closed hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                        </label>
+                        <a href="#" class="text-sm text-primary-600 hover:text-primary-700">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-full py-3">
+                        <span>Sign In</span>
+                        <svg class="w-5 h-5 animate-spin hidden loading-spinner" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form hidden">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Create Account</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Start your ACT prep journey today</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="register-name">Full Name</label>
+                        <input type="text" id="register-name" name="name" class="form-input" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="register-email">Email Address</label>
+                        <input type="email" id="register-email" name="email" class="form-input" placeholder="you@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="register-password">Password</label>
+                        <div class="relative">
+                            <input type="password" id="register-password" name="password" class="form-input pr-10" placeholder="••••••••" required minlength="8">
+                            <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 toggle-password">
+                                <svg class="w-5 h-5 eye-open" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                <svg class="w-5 h-5 eye-closed hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">At least 8 characters</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" name="confirm_password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="flex items-start gap-2 mb-6">
+                        <input type="checkbox" id="terms" class="form-checkbox mt-0.5" required>
+                        <label for="terms" class="text-sm text-gray-600 dark:text-gray-400">
+                            I agree to the <a href="#" class="text-primary-600 hover:text-primary-700">Terms of Service</a> and <a href="#" class="text-primary-600 hover:text-primary-700">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-full py-3">
+                        <span>Create Account</span>
+                        <svg class="w-5 h-5 animate-spin hidden loading-spinner" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </form>
+                
+                <!-- Demo Account Info -->
+                <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
+                        <span class="font-medium">Demo:</span> Create a new account or sign in to get started!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab switching
+            const tabs = document.querySelectorAll('.auth-tab');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active', 'bg-white', 'shadow'));
+                    tab.classList.add('active', 'bg-white', 'shadow');
+                    
+                    if (tab.dataset.tab === 'login') {
+                        loginForm.classList.remove('hidden');
+                        registerForm.classList.add('hidden');
+                    } else {
+                        loginForm.classList.add('hidden');
+                        registerForm.classList.remove('hidden');
+                    }
+                });
+            });
+            
+            // Initialize first tab style
+            document.querySelector('.auth-tab.active').classList.add('bg-white', 'shadow');
+            
+            // Toggle password visibility
+            document.querySelectorAll('.toggle-password').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const input = btn.previousElementSibling;
+                    const eyeOpen = btn.querySelector('.eye-open');
+                    const eyeClosed = btn.querySelector('.eye-closed');
+                    
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        eyeOpen.classList.add('hidden');
+                        eyeClosed.classList.remove('hidden');
+                    } else {
+                        input.type = 'password';
+                        eyeOpen.classList.remove('hidden');
+                        eyeClosed.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Login form submission
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const btn = loginForm.querySelector('button[type="submit"]');
+                const spinner = btn.querySelector('.loading-spinner');
+                
+                btn.disabled = true;
+                spinner.classList.remove('hidden');
+                
+                try {
+                    const result = await API.login(email, password);
+                    
+                    if (result.success) {
+                        Storage.setSession(result.data);
+                        Notifications.success('Welcome!', 'Login successful');
+                        
+                        // Redirect to dashboard
+                        const redirect = Storage.get('redirect_after_login');
+                        Storage.remove('redirect_after_login');
+                        window.location.href = redirect || 'dashboard.html';
+                    } else {
+                        Notifications.error('Login Failed', result.message || 'Invalid credentials');
+                    }
+                } catch (error) {
+                    Notifications.error('Error', 'An error occurred during login');
+                } finally {
+                    btn.disabled = false;
+                    spinner.classList.add('hidden');
+                }
+            });
+            
+            // Register form submission
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('register-name').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirm = document.getElementById('register-confirm').value;
+                const btn = registerForm.querySelector('button[type="submit"]');
+                const spinner = btn.querySelector('.loading-spinner');
+                
+                // Validate passwords match
+                if (password !== confirm) {
+                    Notifications.error('Error', 'Passwords do not match');
+                    return;
+                }
+                
+                btn.disabled = true;
+                spinner.classList.remove('hidden');
+                
+                try {
+                    const result = await API.register(email, password, name);
+                    
+                    if (result.success) {
+                        Storage.setSession(result.data);
+                        Notifications.success('Welcome!', 'Account created successfully');
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        Notifications.error('Registration Failed', result.message || 'Could not create account');
+                    }
+                } catch (error) {
+                    Notifications.error('Error', 'An error occurred during registration');
+                } finally {
+                    btn.disabled = false;
+                    spinner.classList.add('hidden');
+                }
+            });
+            
+            // Check if already logged in
+            (async () => {
+                const result = await API.checkAuth();
+                if (result.success && result.data?.authenticated) {
+                    window.location.href = 'dashboard.html';
+                }
+            })();
+        });
+    </script>
+</body>
+</html>

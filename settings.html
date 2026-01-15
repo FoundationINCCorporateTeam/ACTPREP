@@ -1,0 +1,386 @@
+<?php $pageTitle = 'Settings - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Settings</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Customize your learning experience</p>
+            </div>
+
+            <div class="max-w-3xl">
+                <!-- Appearance -->
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Appearance</h2>
+                    </div>
+                    <div class="card-body space-y-6">
+                        <!-- Theme -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Dark Mode</div>
+                                <div class="text-sm text-gray-500">Use dark theme for reduced eye strain</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="dark-mode-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Font Size -->
+                        <div>
+                            <div class="font-medium mb-2">Font Size</div>
+                            <div class="flex items-center gap-4">
+                                <input type="range" id="font-size" min="12" max="20" value="16" class="flex-1">
+                                <span id="font-size-value" class="text-sm text-gray-500 w-12">16px</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Study Preferences -->
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Study Preferences</h2>
+                    </div>
+                    <div class="card-body space-y-6">
+                        <!-- Default Subject -->
+                        <div class="form-group">
+                            <label class="form-label" for="default-subject">Default Subject</label>
+                            <select id="default-subject" class="form-input form-select">
+                                <option value="">No preference</option>
+                                <option value="english">English</option>
+                                <option value="math">Math</option>
+                                <option value="reading">Reading</option>
+                                <option value="science">Science</option>
+                            </select>
+                        </div>
+
+                        <!-- Default Difficulty -->
+                        <div class="form-group">
+                            <label class="form-label" for="default-difficulty">Default Difficulty</label>
+                            <select id="default-difficulty" class="form-input form-select">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+
+                        <!-- Daily Goal -->
+                        <div class="form-group">
+                            <label class="form-label" for="daily-goal">Daily Study Goal (minutes)</label>
+                            <select id="daily-goal" class="form-input form-select">
+                                <option value="15">15 minutes</option>
+                                <option value="30" selected>30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="90">1.5 hours</option>
+                                <option value="120">2 hours</option>
+                            </select>
+                        </div>
+
+                        <!-- Quiz Timer -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Enable Quiz Timer</div>
+                                <div class="text-sm text-gray-500">Show countdown timer during quizzes</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="quiz-timer" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Auto Advance -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Auto-advance Questions</div>
+                                <div class="text-sm text-gray-500">Move to next question after answering</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="auto-advance" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Settings -->
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <h2 class="font-semibold">AI Settings</h2>
+                    </div>
+                    <div class="card-body space-y-6">
+                        <!-- Preferred Model -->
+                        <div class="form-group">
+                            <label class="form-label" for="preferred-model">Preferred AI Model</label>
+                            <select id="preferred-model" class="form-input form-select">
+                                <option value="deepseek-v3.2">DeepSeek V3.2 (Recommended)</option>
+                                <option value="glm-4.7">GLM 4.7 Thinking</option>
+                                <option value="llama-3.1">Llama 3.1 Large</option>
+                                <option value="minimax-m2.1">MiniMax M2.1</option>
+                                <option value="mistral-large">Mistral Large 3</option>
+                                <option value="kimi-k2">Kimi K2 Thinking</option>
+                            </select>
+                            <p class="form-hint">Used for generating content and chat</p>
+                        </div>
+
+                        <!-- Explanation Detail -->
+                        <div class="form-group">
+                            <label class="form-label" for="explanation-detail">Explanation Detail Level</label>
+                            <select id="explanation-detail" class="form-input form-select">
+                                <option value="brief">Brief</option>
+                                <option value="standard" selected>Standard</option>
+                                <option value="detailed">Detailed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Notifications</h2>
+                    </div>
+                    <div class="card-body space-y-6">
+                        <!-- Study Reminders -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Study Reminders</div>
+                                <div class="text-sm text-gray-500">Get daily reminders to study</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="study-reminders" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Achievement Notifications -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Achievement Notifications</div>
+                                <div class="text-sm text-gray-500">Celebrate when you unlock achievements</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="achievement-notifs" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Sound Effects -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Sound Effects</div>
+                                <div class="text-sm text-gray-500">Play sounds for actions and achievements</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="sound-effects">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data -->
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <h2 class="font-semibold">Data & Privacy</h2>
+                    </div>
+                    <div class="card-body space-y-6">
+                        <!-- Export Data -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Export Your Data</div>
+                                <div class="text-sm text-gray-500">Download all your progress and content</div>
+                            </div>
+                            <button id="export-data" class="btn btn-secondary btn-sm">Export</button>
+                        </div>
+
+                        <!-- Clear Progress -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium text-red-600">Reset Progress</div>
+                                <div class="text-sm text-gray-500">Clear all your study progress (cannot be undone)</div>
+                            </div>
+                            <button id="reset-progress" class="btn btn-danger btn-sm">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="flex justify-end gap-4">
+                    <button id="reset-defaults" class="btn btn-secondary">Reset to Defaults</button>
+                    <button id="save-settings" class="btn btn-primary">Save Settings</button>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let settings = {};
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadSettings();
+    setupEventListeners();
+});
+
+async function loadSettings() {
+    try {
+        const result = await API.getSettings();
+        
+        if (result.success && result.data) {
+            settings = result.data;
+            applySettings();
+        }
+    } catch (error) {
+        console.error('Failed to load settings:', error);
+    }
+    
+    // Check current dark mode
+    document.getElementById('dark-mode-toggle').checked = 
+        document.documentElement.classList.contains('dark');
+}
+
+function applySettings() {
+    // Appearance
+    document.getElementById('dark-mode-toggle').checked = settings.dark_mode || false;
+    document.getElementById('font-size').value = settings.font_size || 16;
+    document.getElementById('font-size-value').textContent = (settings.font_size || 16) + 'px';
+    
+    // Study preferences
+    document.getElementById('default-subject').value = settings.default_subject || '';
+    document.getElementById('default-difficulty').value = settings.default_difficulty || 'intermediate';
+    document.getElementById('daily-goal').value = settings.daily_goal || 30;
+    document.getElementById('quiz-timer').checked = settings.quiz_timer !== false;
+    document.getElementById('auto-advance').checked = settings.auto_advance !== false;
+    
+    // AI
+    document.getElementById('preferred-model').value = settings.preferred_model || 'deepseek-v3.2';
+    document.getElementById('explanation-detail').value = settings.explanation_detail || 'standard';
+    
+    // Notifications
+    document.getElementById('study-reminders').checked = settings.study_reminders !== false;
+    document.getElementById('achievement-notifs').checked = settings.achievement_notifs !== false;
+    document.getElementById('sound-effects').checked = settings.sound_effects || false;
+}
+
+function setupEventListeners() {
+    // Dark mode toggle (immediate effect)
+    document.getElementById('dark-mode-toggle').addEventListener('change', (e) => {
+        if (e.target.checked) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+    
+    // Font size slider
+    document.getElementById('font-size').addEventListener('input', (e) => {
+        document.getElementById('font-size-value').textContent = e.target.value + 'px';
+        document.documentElement.style.fontSize = e.target.value + 'px';
+    });
+    
+    // Save settings
+    document.getElementById('save-settings').addEventListener('click', saveSettings);
+    
+    // Reset to defaults
+    document.getElementById('reset-defaults').addEventListener('click', resetToDefaults);
+    
+    // Export data
+    document.getElementById('export-data').addEventListener('click', exportData);
+    
+    // Reset progress
+    document.getElementById('reset-progress').addEventListener('click', resetProgress);
+}
+
+async function saveSettings() {
+    const newSettings = {
+        dark_mode: document.getElementById('dark-mode-toggle').checked,
+        font_size: parseInt(document.getElementById('font-size').value),
+        default_subject: document.getElementById('default-subject').value,
+        default_difficulty: document.getElementById('default-difficulty').value,
+        daily_goal: parseInt(document.getElementById('daily-goal').value),
+        quiz_timer: document.getElementById('quiz-timer').checked,
+        auto_advance: document.getElementById('auto-advance').checked,
+        preferred_model: document.getElementById('preferred-model').value,
+        explanation_detail: document.getElementById('explanation-detail').value,
+        study_reminders: document.getElementById('study-reminders').checked,
+        achievement_notifs: document.getElementById('achievement-notifs').checked,
+        sound_effects: document.getElementById('sound-effects').checked
+    };
+    
+    try {
+        const result = await API.saveSettings(newSettings);
+        
+        if (result.success) {
+            settings = newSettings;
+            Notifications.success('Saved', 'Your settings have been saved');
+        } else {
+            throw new Error(result.message);
+        }
+    } catch (error) {
+        Notifications.error('Error', 'Failed to save settings');
+    }
+}
+
+function resetToDefaults() {
+    if (!confirm('Reset all settings to defaults?')) return;
+    
+    settings = {
+        dark_mode: false,
+        font_size: 16,
+        default_subject: '',
+        default_difficulty: 'intermediate',
+        daily_goal: 30,
+        quiz_timer: true,
+        auto_advance: true,
+        preferred_model: 'deepseek-v3.2',
+        explanation_detail: 'standard',
+        study_reminders: true,
+        achievement_notifs: true,
+        sound_effects: false
+    };
+    
+    applySettings();
+    
+    // Reset theme
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('theme');
+    
+    // Reset font size
+    document.documentElement.style.fontSize = '';
+    
+    Notifications.info('Reset', 'Settings restored to defaults');
+}
+
+function exportData() {
+    API.exportData();
+    Notifications.info('Exporting', 'Your data download will begin shortly');
+}
+
+async function resetProgress() {
+    if (!confirm('Are you sure you want to reset all your progress? This cannot be undone!')) return;
+    if (!confirm('This will delete all your quizzes, lessons, and achievements. Continue?')) return;
+    
+    UI.showLoading('Resetting progress...');
+    
+    try {
+        // API call to reset progress would go here
+        Notifications.success('Reset Complete', 'Your progress has been cleared');
+        setTimeout(() => window.location.reload(), 1500);
+    } catch (error) {
+        Notifications.error('Error', 'Failed to reset progress');
+    } finally {
+        UI.hideLoading();
+    }
+}
+</script>

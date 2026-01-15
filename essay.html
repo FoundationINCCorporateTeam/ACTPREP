@@ -1,0 +1,601 @@
+<?php $pageTitle = 'Essay Practice - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Essay Practice</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div>
+                    <h1 class="page-title">Essay Practice</h1>
+                    <p class="page-subtitle">Practice ACT writing with AI-powered feedback</p>
+                </div>
+                <button id="new-essay-btn" class="btn btn-primary mt-4 md:mt-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    New Essay
+                </button>
+            </div>
+
+            <!-- Essay Interface -->
+            <div id="essay-setup" class="grid lg:grid-cols-3 gap-6">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Generate Prompt Card -->
+                    <div class="card" id="generate-prompt-card">
+                        <div class="card-body text-center py-12">
+                            <div class="text-5xl mb-4">✍️</div>
+                            <h2 class="text-xl font-bold mb-2">Start a New Essay</h2>
+                            <p class="text-gray-500 mb-6">Generate an ACT-style writing prompt and practice your essay skills</p>
+                            <button id="generate-prompt-btn" class="btn btn-primary btn-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                Generate Prompt
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Previous Essays -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Previous Essays</h2>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="essays-list" class="divide-y divide-gray-200 dark:divide-gray-700 max-h-96 overflow-y-auto">
+                                <p class="p-6 text-center text-gray-500">No essays yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Essay Tips -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="font-semibold">📝 ACT Essay Tips</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-500">•</span>
+                                    <span>Take a clear position on the issue</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-500">•</span>
+                                    <span>Address all three perspectives given</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-500">•</span>
+                                    <span>Use specific examples and evidence</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-500">•</span>
+                                    <span>Organize with clear introduction, body, conclusion</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-500">•</span>
+                                    <span>Aim for 400-600 words</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Scoring Rubric -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="font-semibold">Scoring (1-6 scale)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="space-y-3 text-sm">
+                                <div>
+                                    <div class="font-medium">Ideas & Analysis</div>
+                                    <div class="text-gray-500">Critical thinking and perspective analysis</div>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Development & Support</div>
+                                    <div class="text-gray-500">Examples, reasoning, and evidence</div>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Organization</div>
+                                    <div class="text-gray-500">Structure and logical flow</div>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Language Use</div>
+                                    <div class="text-gray-500">Grammar, vocabulary, and style</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="card bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                        <div class="card-body text-center">
+                            <div class="text-3xl font-bold" id="essay-count">0</div>
+                            <div class="text-sm opacity-80">Essays Written</div>
+                            <div class="mt-4 text-2xl font-bold" id="avg-essay-score">--</div>
+                            <div class="text-sm opacity-80">Avg Score</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Writing Interface -->
+            <div id="writing-interface" class="hidden">
+                <!-- Prompt Display -->
+                <div class="card mb-6">
+                    <div class="card-header bg-primary-50 dark:bg-primary-900/20">
+                        <h2 class="font-semibold text-primary-700 dark:text-primary-400">Essay Prompt</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="prompt-content" class="prose dark:prose-invert max-w-none">
+                            <!-- Prompt will be rendered here -->
+                        </div>
+                        <div id="perspectives" class="mt-6 grid md:grid-cols-3 gap-4">
+                            <!-- Perspectives will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Writing Area -->
+                <div class="grid lg:grid-cols-4 gap-6">
+                    <div class="lg:col-span-3">
+                        <div class="card">
+                            <div class="card-header flex items-center justify-between">
+                                <h3 class="font-semibold">Your Essay</h3>
+                                <div class="flex items-center gap-4 text-sm">
+                                    <span class="text-gray-500">
+                                        <span id="word-count">0</span> words
+                                    </span>
+                                    <span class="text-gray-500" id="timer-display">
+                                        <span id="timer">40:00</span> remaining
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <textarea id="essay-content" class="form-input form-textarea min-h-[400px] font-mono" placeholder="Start writing your essay here..."></textarea>
+                            </div>
+                            <div class="card-footer flex items-center justify-between">
+                                <button id="save-draft" class="btn btn-secondary">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                                    </svg>
+                                    Save Draft
+                                </button>
+                                <button id="submit-essay" class="btn btn-primary">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    Submit for Grading
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Writing Sidebar -->
+                    <div class="space-y-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="font-semibold">Quick Tools</h4>
+                            </div>
+                            <div class="card-body space-y-2">
+                                <button class="insert-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-insert="introduction">
+                                    📝 Introduction Template
+                                </button>
+                                <button class="insert-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-insert="transition">
+                                    ➡️ Transition Phrases
+                                </button>
+                                <button class="insert-btn w-full text-left px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm transition-colors" data-insert="conclusion">
+                                    ✅ Conclusion Template
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="font-semibold">Progress</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <span id="check-intro" class="text-gray-300">✓</span>
+                                        <span>Introduction</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span id="check-thesis" class="text-gray-300">✓</span>
+                                        <span>Clear Thesis</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span id="check-body" class="text-gray-300">✓</span>
+                                        <span>Body Paragraphs</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span id="check-conclusion" class="text-gray-300">✓</span>
+                                        <span>Conclusion</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span id="check-length" class="text-gray-300">✓</span>
+                                        <span>400+ words</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grading Interface -->
+            <div id="grading-interface" class="hidden">
+                <div class="card mb-6">
+                    <div class="card-body text-center py-12">
+                        <div class="loading-spinner mx-auto mb-4"></div>
+                        <h3 class="text-lg font-semibold mb-2">Grading Your Essay...</h3>
+                        <p class="text-gray-500">AI is analyzing your writing</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Interface -->
+            <div id="results-interface" class="hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold">Essay Results</h2>
+                    <button id="write-another" class="btn btn-primary">Write Another Essay</button>
+                </div>
+
+                <!-- Score Overview -->
+                <div class="grid md:grid-cols-5 gap-4 mb-8">
+                    <div class="card bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                        <div class="card-body text-center">
+                            <div class="text-4xl font-bold" id="total-score">--</div>
+                            <div class="text-sm opacity-80">Total Score (2-12)</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="text-3xl font-bold text-blue-600" id="ideas-score">--</div>
+                            <div class="text-sm text-gray-500">Ideas & Analysis</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="text-3xl font-bold text-green-600" id="dev-score">--</div>
+                            <div class="text-sm text-gray-500">Development</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="text-3xl font-bold text-purple-600" id="org-score">--</div>
+                            <div class="text-sm text-gray-500">Organization</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="text-3xl font-bold text-orange-600" id="lang-score">--</div>
+                            <div class="text-sm text-gray-500">Language Use</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Feedback -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="font-semibold">Strengths</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul id="strengths" class="space-y-2">
+                                <!-- Strengths will be rendered -->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="font-semibold">Areas for Improvement</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul id="improvements" class="space-y-2">
+                                <!-- Improvements will be rendered -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Feedback -->
+                <div class="card mt-6">
+                    <div class="card-header">
+                        <h3 class="font-semibold">Detailed Feedback</h3>
+                    </div>
+                    <div class="card-body prose dark:prose-invert max-w-none" id="detailed-feedback">
+                        <!-- Feedback will be rendered -->
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let currentPrompt = null;
+let currentEssay = null;
+let timer = null;
+let timeRemaining = 40 * 60;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    setupEventListeners();
+    loadEssays();
+    loadStats();
+});
+
+function setupEventListeners() {
+    // Generate prompt
+    document.getElementById('generate-prompt-btn').addEventListener('click', generatePrompt);
+    document.getElementById('new-essay-btn').addEventListener('click', generatePrompt);
+    
+    // Essay content
+    document.getElementById('essay-content').addEventListener('input', handleEssayInput);
+    
+    // Save and submit
+    document.getElementById('save-draft').addEventListener('click', saveDraft);
+    document.getElementById('submit-essay').addEventListener('click', submitEssay);
+    
+    // Write another
+    document.getElementById('write-another').addEventListener('click', () => {
+        document.getElementById('results-interface').classList.add('hidden');
+        document.getElementById('essay-setup').classList.remove('hidden');
+    });
+    
+    // Insert templates
+    document.querySelectorAll('.insert-btn').forEach(btn => {
+        btn.addEventListener('click', () => insertTemplate(btn.dataset.insert));
+    });
+}
+
+async function loadEssays() {
+    try {
+        const result = await API.getEssays();
+        const container = document.getElementById('essays-list');
+        
+        if (result.success && result.data && result.data.length > 0) {
+            container.innerHTML = result.data.map(essay => `
+                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors" data-id="${essay.id}">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-sm line-clamp-1">${Utils.escapeHtml(essay.prompt?.substring(0, 50) || 'Essay')}...</div>
+                            <div class="text-xs text-gray-500">${essay.created_at ? Utils.timeAgo(essay.created_at) : 'Recently'}</div>
+                        </div>
+                        ${essay.score ? `<span class="badge badge-primary">${essay.score}/12</span>` : '<span class="badge badge-gray">Draft</span>'}
+                    </div>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Failed to load essays:', error);
+    }
+}
+
+async function loadStats() {
+    try {
+        const result = await API.getStatistics();
+        if (result.success && result.data?.essays) {
+            document.getElementById('essay-count').textContent = result.data.essays.count || 0;
+            document.getElementById('avg-essay-score').textContent = result.data.essays.average_score ? 
+                (result.data.essays.average_score + '/12') : '--';
+        }
+    } catch (error) {
+        console.error('Failed to load stats:', error);
+    }
+}
+
+async function generatePrompt() {
+    document.getElementById('generate-prompt-btn').disabled = true;
+    document.getElementById('generate-prompt-btn').innerHTML = '<div class="loading-spinner w-5 h-5"></div> Generating...';
+    
+    try {
+        const result = await Poll.generateEssayPrompt({}, {
+            onProgress: () => {}
+        });
+        
+        currentPrompt = result;
+        showWritingInterface();
+        
+    } catch (error) {
+        Notifications.error('Error', error.message);
+    } finally {
+        document.getElementById('generate-prompt-btn').disabled = false;
+        document.getElementById('generate-prompt-btn').innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Generate Prompt';
+    }
+}
+
+function showWritingInterface() {
+    document.getElementById('essay-setup').classList.add('hidden');
+    document.getElementById('writing-interface').classList.remove('hidden');
+    
+    // Render prompt
+    document.getElementById('prompt-content').innerHTML = `
+        <p class="text-lg">${Utils.escapeHtml(currentPrompt.topic || currentPrompt.prompt)}</p>
+    `;
+    
+    // Render perspectives
+    const perspectives = currentPrompt.perspectives || [];
+    document.getElementById('perspectives').innerHTML = perspectives.map((p, i) => `
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+            <div class="font-semibold mb-2">Perspective ${i + 1}</div>
+            <p class="text-sm">${Utils.escapeHtml(p)}</p>
+        </div>
+    `).join('');
+    
+    // Start timer
+    timeRemaining = 40 * 60;
+    updateTimer();
+    timer = setInterval(() => {
+        timeRemaining--;
+        updateTimer();
+        if (timeRemaining <= 0) {
+            clearInterval(timer);
+            submitEssay();
+        }
+    }, 1000);
+    
+    // Focus on textarea
+    document.getElementById('essay-content').focus();
+}
+
+function updateTimer() {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    document.getElementById('timer').textContent = 
+        mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+    
+    if (timeRemaining <= 300) {
+        document.getElementById('timer-display').classList.add('text-red-600');
+    }
+}
+
+function handleEssayInput(e) {
+    const content = e.target.value;
+    const words = Utils.wordCount(content);
+    
+    document.getElementById('word-count').textContent = words;
+    
+    // Update checklist
+    const hasIntro = content.toLowerCase().includes('introduction') || words > 50;
+    const hasThesis = content.includes('.') && words > 30;
+    const hasBody = words > 200;
+    const hasConclusion = content.toLowerCase().includes('conclusion') || content.toLowerCase().includes('in conclusion');
+    const hasLength = words >= 400;
+    
+    document.getElementById('check-intro').classList.toggle('text-green-500', hasIntro);
+    document.getElementById('check-intro').classList.toggle('text-gray-300', !hasIntro);
+    document.getElementById('check-thesis').classList.toggle('text-green-500', hasThesis);
+    document.getElementById('check-thesis').classList.toggle('text-gray-300', !hasThesis);
+    document.getElementById('check-body').classList.toggle('text-green-500', hasBody);
+    document.getElementById('check-body').classList.toggle('text-gray-300', !hasBody);
+    document.getElementById('check-conclusion').classList.toggle('text-green-500', hasConclusion);
+    document.getElementById('check-conclusion').classList.toggle('text-gray-300', !hasConclusion);
+    document.getElementById('check-length').classList.toggle('text-green-500', hasLength);
+    document.getElementById('check-length').classList.toggle('text-gray-300', !hasLength);
+}
+
+function insertTemplate(type) {
+    const textarea = document.getElementById('essay-content');
+    const templates = {
+        introduction: '\n[Introduction paragraph: Hook your reader, provide context, and state your thesis]\n\n',
+        transition: '\nFurthermore... / Additionally... / On the other hand... / However... / In contrast...\n',
+        conclusion: '\n\nIn conclusion, [restate your thesis and summarize key points]. [End with a thought-provoking statement or call to action].\n'
+    };
+    
+    const template = templates[type] || '';
+    const cursorPos = textarea.selectionStart;
+    const before = textarea.value.substring(0, cursorPos);
+    const after = textarea.value.substring(cursorPos);
+    
+    textarea.value = before + template + after;
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = cursorPos + template.length;
+    
+    // Trigger input event
+    textarea.dispatchEvent(new Event('input'));
+}
+
+async function saveDraft() {
+    const content = document.getElementById('essay-content').value;
+    
+    if (!content.trim()) {
+        Notifications.error('Error', 'Cannot save empty essay');
+        return;
+    }
+    
+    try {
+        await API.saveEssay({
+            prompt: currentPrompt.topic || currentPrompt.prompt,
+            content,
+            perspectives: currentPrompt.perspectives,
+            is_draft: true
+        });
+        
+        Notifications.success('Saved', 'Draft saved successfully');
+    } catch (error) {
+        Notifications.error('Error', 'Failed to save draft');
+    }
+}
+
+async function submitEssay() {
+    if (timer) clearInterval(timer);
+    
+    const content = document.getElementById('essay-content').value;
+    
+    if (Utils.wordCount(content) < 100) {
+        if (!confirm('Your essay is very short. Submit anyway?')) {
+            return;
+        }
+    }
+    
+    document.getElementById('writing-interface').classList.add('hidden');
+    document.getElementById('grading-interface').classList.remove('hidden');
+    
+    try {
+        const result = await Poll.gradeEssay({
+            content,
+            prompt: currentPrompt.topic || currentPrompt.prompt,
+            perspectives: currentPrompt.perspectives
+        }, {
+            onProgress: () => {}
+        });
+        
+        // Save the essay with scores
+        await API.saveEssay({
+            prompt: currentPrompt.topic || currentPrompt.prompt,
+            content,
+            perspectives: currentPrompt.perspectives,
+            score: result.total_score,
+            scores: result.scores,
+            feedback: result.feedback
+        });
+        
+        showResults(result);
+        loadEssays();
+        loadStats();
+        
+    } catch (error) {
+        Notifications.error('Grading Failed', error.message);
+        document.getElementById('grading-interface').classList.add('hidden');
+        document.getElementById('writing-interface').classList.remove('hidden');
+    }
+}
+
+function showResults(result) {
+    document.getElementById('grading-interface').classList.add('hidden');
+    document.getElementById('results-interface').classList.remove('hidden');
+    
+    // Scores
+    document.getElementById('total-score').textContent = result.total_score || '--';
+    document.getElementById('ideas-score').textContent = result.scores?.ideas || '--';
+    document.getElementById('dev-score').textContent = result.scores?.development || '--';
+    document.getElementById('org-score').textContent = result.scores?.organization || '--';
+    document.getElementById('lang-score').textContent = result.scores?.language || '--';
+    
+    // Strengths
+    const strengthsList = document.getElementById('strengths');
+    const strengths = result.strengths || [];
+    strengthsList.innerHTML = strengths.length > 0 
+        ? strengths.map(s => `<li class="flex items-start gap-2"><span class="text-green-500">✓</span><span>${Utils.escapeHtml(s)}</span></li>`).join('')
+        : '<li class="text-gray-500">No specific strengths noted</li>';
+    
+    // Improvements
+    const improvementsList = document.getElementById('improvements');
+    const improvements = result.improvements || result.areas_for_improvement || [];
+    improvementsList.innerHTML = improvements.length > 0
+        ? improvements.map(i => `<li class="flex items-start gap-2"><span class="text-orange-500">→</span><span>${Utils.escapeHtml(i)}</span></li>`).join('')
+        : '<li class="text-gray-500">No specific improvements noted</li>';
+    
+    // Detailed feedback
+    document.getElementById('detailed-feedback').innerHTML = 
+        MarkdownRenderer.render(result.feedback || result.detailed_feedback || 'No detailed feedback available.');
+}
+</script>

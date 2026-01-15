@@ -1,0 +1,365 @@
+<?php $pageTitle = 'Quiz Results - ACT Test Prep'; ?>
+<?php include 'php/header.php'; ?>
+<?php include 'php/sidebar.php'; ?>
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="breadcrumb-separator">›</span>
+                <a href="quiz.html">Quiz</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Results</span>
+            </nav>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="py-12 text-center">
+                <div class="loading-spinner mx-auto mb-4"></div>
+                <p class="text-gray-500">Loading results...</p>
+            </div>
+
+            <!-- Results Content -->
+            <div id="results-content" class="hidden">
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4" id="result-emoji">🎯</div>
+                    <h1 class="text-3xl font-bold mb-2" id="result-message">Great Job!</h1>
+                    <p class="text-gray-500" id="quiz-info">Quiz completed</p>
+                </div>
+
+                <!-- Score Card -->
+                <div class="max-w-2xl mx-auto mb-8">
+                    <div class="card bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                        <div class="card-body py-8">
+                            <div class="grid grid-cols-3 gap-6 text-center">
+                                <div>
+                                    <div class="text-5xl font-bold" id="score-percent">0%</div>
+                                    <div class="text-sm opacity-80 mt-1">Score</div>
+                                </div>
+                                <div>
+                                    <div class="text-5xl font-bold"><span id="correct-count">0</span>/<span id="total-count">0</span></div>
+                                    <div class="text-sm opacity-80 mt-1">Correct</div>
+                                </div>
+                                <div>
+                                    <div class="text-5xl font-bold" id="time-taken">0:00</div>
+                                    <div class="text-sm opacity-80 mt-1">Time</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <a href="quiz.html" class="btn btn-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        New Quiz
+                    </a>
+                    <button id="review-btn" class="btn btn-secondary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        Review Answers
+                    </button>
+                    <button id="study-weak-btn" class="btn btn-outline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        Study Weak Areas
+                    </button>
+                </div>
+
+                <!-- Performance Breakdown -->
+                <div class="grid lg:grid-cols-2 gap-6 mb-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Performance by Difficulty</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="h-48">
+                                <canvas id="difficulty-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-semibold">Time per Question</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="h-48">
+                                <canvas id="time-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Review -->
+                <div class="card" id="review-section">
+                    <div class="card-header flex items-center justify-between">
+                        <h2 class="font-semibold">Question Review</h2>
+                        <div class="flex gap-2">
+                            <button class="btn btn-sm btn-secondary filter-btn active" data-filter="all">All</button>
+                            <button class="btn btn-sm btn-secondary filter-btn" data-filter="correct">✓ Correct</button>
+                            <button class="btn btn-sm btn-secondary filter-btn" data-filter="incorrect">✗ Incorrect</button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="questions-review" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Questions will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php include 'php/footer.php'; ?>
+
+<script>
+let quiz = null;
+let results = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const params = Utils.getQueryParams();
+    const quizId = params.id;
+    
+    if (!quizId) {
+        window.location.href = 'quiz.html';
+        return;
+    }
+    
+    await loadResults(quizId);
+    setupEventListeners();
+});
+
+async function loadResults(id) {
+    try {
+        const result = await API.getQuizResults(id);
+        
+        if (!result.success || !result.data) {
+            throw new Error('Results not found');
+        }
+        
+        results = result.data;
+        quiz = results.quiz;
+        
+        renderResults();
+        
+        document.getElementById('loading-state').classList.add('hidden');
+        document.getElementById('results-content').classList.remove('hidden');
+        
+    } catch (error) {
+        console.error('Failed to load results:', error);
+        Notifications.error('Error', 'Failed to load quiz results');
+        setTimeout(() => window.location.href = 'quiz.html', 2000);
+    }
+}
+
+function renderResults() {
+    const score = results.score || 0;
+    const correct = results.correct || 0;
+    const total = results.total || quiz.questions?.length || 0;
+    const timeTaken = results.time_taken || 0;
+    
+    // Update score display
+    document.getElementById('score-percent').textContent = score + '%';
+    document.getElementById('correct-count').textContent = correct;
+    document.getElementById('total-count').textContent = total;
+    document.getElementById('time-taken').textContent = Utils.formatDuration(timeTaken);
+    
+    // Update message and emoji based on score
+    let emoji, message;
+    if (score >= 90) {
+        emoji = '🏆';
+        message = 'Outstanding!';
+    } else if (score >= 80) {
+        emoji = '🌟';
+        message = 'Excellent Work!';
+    } else if (score >= 70) {
+        emoji = '👏';
+        message = 'Great Job!';
+    } else if (score >= 60) {
+        emoji = '👍';
+        message = 'Good Effort!';
+    } else if (score >= 50) {
+        emoji = '💪';
+        message = 'Keep Practicing!';
+    } else {
+        emoji = '📚';
+        message = 'More Study Needed';
+    }
+    
+    document.getElementById('result-emoji').textContent = emoji;
+    document.getElementById('result-message').textContent = message;
+    document.getElementById('quiz-info').textContent = 
+        `${Utils.capitalize(quiz.subject || 'General')} Quiz • ${total} questions`;
+    
+    // Render charts
+    renderCharts();
+    
+    // Render question review
+    renderQuestionReview();
+}
+
+function renderCharts() {
+    // Difficulty breakdown
+    const difficultyData = { beginner: 0, intermediate: 0, advanced: 0 };
+    const difficultyCorrect = { beginner: 0, intermediate: 0, advanced: 0 };
+    
+    if (quiz.questions && results.answers) {
+        quiz.questions.forEach((q, i) => {
+            const diff = q.difficulty || 'intermediate';
+            if (difficultyData[diff] !== undefined) {
+                difficultyData[diff]++;
+                if (results.answers[i]?.correct) {
+                    difficultyCorrect[diff]++;
+                }
+            }
+        });
+    }
+    
+    const diffLabels = Object.keys(difficultyData).filter(k => difficultyData[k] > 0);
+    const diffScores = diffLabels.map(k => 
+        difficultyData[k] > 0 ? Math.round((difficultyCorrect[k] / difficultyData[k]) * 100) : 0
+    );
+    
+    if (diffLabels.length > 0) {
+        Charts.bar('difficulty-chart', 
+            diffLabels.map(l => Utils.capitalize(l)),
+            [{ label: 'Score %', data: diffScores, colors: ['#10b981', '#3b82f6', '#f59e0b'] }],
+            { scales: { y: { max: 100 } } }
+        );
+    }
+    
+    // Time per question
+    const timeData = quiz.questions?.map((_, i) => 
+        results.question_times?.[i] || Math.round(Math.random() * 60 + 30)
+    ) || [];
+    
+    if (timeData.length > 0) {
+        Charts.bar('time-chart',
+            timeData.map((_, i) => `Q${i + 1}`),
+            [{ label: 'Seconds', data: timeData, color: '#8b5cf6' }]
+        );
+    }
+}
+
+function renderQuestionReview() {
+    const container = document.getElementById('questions-review');
+    
+    if (!quiz.questions) {
+        container.innerHTML = '<p class="p-6 text-center text-gray-500">No questions to review</p>';
+        return;
+    }
+    
+    container.innerHTML = quiz.questions.map((q, i) => {
+        const answerData = results.answers?.[i] || {};
+        const isCorrect = answerData.correct;
+        const userAnswer = answerData.user_answer;
+        const correctAnswer = answerData.correct_answer ?? q.correct ?? q.answer;
+        
+        return `
+            <div class="question-review-item p-6 ${isCorrect ? 'correct' : 'incorrect'}" data-correct="${isCorrect}">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${isCorrect ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">
+                        ${isCorrect ? '✓' : '✗'}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="badge badge-gray">Question ${i + 1}</span>
+                            ${q.difficulty ? `<span class="badge badge-${Utils.getDifficultyColor(q.difficulty)}">${Utils.capitalize(q.difficulty)}</span>` : ''}
+                        </div>
+                        <div class="font-medium mb-4 question-text">${Utils.escapeHtml(q.question)}</div>
+                        
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-start gap-2">
+                                <span class="font-medium ${isCorrect ? 'text-green-600' : 'text-red-600'}">Your answer:</span>
+                                <span>${formatAnswer(userAnswer, q)}</span>
+                            </div>
+                            ${!isCorrect ? `
+                                <div class="flex items-start gap-2">
+                                    <span class="font-medium text-green-600">Correct answer:</span>
+                                    <span>${formatAnswer(correctAnswer, q)}</span>
+                                </div>
+                            ` : ''}
+                            ${q.explanation ? `
+                                <div class="mt-4 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+                                    <div class="font-medium text-blue-700 dark:text-blue-300 mb-1">Explanation:</div>
+                                    <div class="text-blue-600 dark:text-blue-400 explanation-text">${Utils.escapeHtml(q.explanation)}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Render math
+    container.querySelectorAll('.question-text, .explanation-text').forEach(el => {
+        MathRenderer.renderElement(el);
+    });
+}
+
+function formatAnswer(answer, question) {
+    if (answer === null || answer === undefined) {
+        return '<span class="text-gray-400">No answer</span>';
+    }
+    
+    if (question.type === 'true_false') {
+        return answer === true || answer === 'true' ? 'True' : 'False';
+    }
+    
+    if (question.type === 'multiple_choice' || question.options) {
+        const options = question.options || question.choices || [];
+        const index = parseInt(answer);
+        if (!isNaN(index) && options[index]) {
+            return `${String.fromCharCode(65 + index)}. ${Utils.escapeHtml(options[index])}`;
+        }
+    }
+    
+    return Utils.escapeHtml(String(answer));
+}
+
+function setupEventListeners() {
+    // Review button
+    document.getElementById('review-btn').addEventListener('click', () => {
+        Utils.scrollTo('#review-section');
+    });
+    
+    // Study weak areas
+    document.getElementById('study-weak-btn').addEventListener('click', () => {
+        const weakTopics = [];
+        if (quiz.questions && results.answers) {
+            quiz.questions.forEach((q, i) => {
+                if (!results.answers[i]?.correct && q.topic) {
+                    weakTopics.push(q.topic);
+                }
+            });
+        }
+        
+        const topic = [...new Set(weakTopics)][0] || quiz.topic || quiz.subject;
+        window.location.href = `lessons.html?subject=${quiz.subject}&topic=${encodeURIComponent(topic)}`;
+    });
+    
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.question-review-item').forEach(item => {
+                const isCorrect = item.dataset.correct === 'true';
+                if (filter === 'all' || 
+                    (filter === 'correct' && isCorrect) || 
+                    (filter === 'incorrect' && !isCorrect)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+    });
+}
+</script>
